@@ -1,0 +1,160 @@
+Understanding Built-in Data Types, Variables, Functions, and 
+Flow Control Statements (Python 2 & Python 3)
+
+---
+
+1. Built-in Data Types
+Python has several built-in data types that store different kinds of information.
+
+- Numbers:
+  - `int`: Integer values.
+    - Python 2: Can cause overflow with large numbers.
+    - Python 3: No limit on the size of integers.
+  - `float`: Decimal values (e.g., 3.14).
+  - `complex`: Complex numbers (e.g., `1+2j`).
+
+- Boolean:
+  - `bool`: Can only be `True` or `False`.
+
+- Strings:
+  - `str`: A sequence of characters.
+    - Python 2: Strings are ASCII by default.
+    - Python 3: Strings are Unicode by default.
+
+- NoneType:
+  - `None`: Represents a null value or absence of value.
+
+2. Variables
+Variables are used to store data, and Python is dynamically typed, 
+so you don't need to declare the type of a variable explicitly.
+
+```python
+x = 5          # Integer
+y = 3.14       # Float
+name = "John"  # String
+is_valid = True  # Boolean
+```
+
+Python 3 Type Hints:
+Python 3 supports type hints for better code readability.
+
+```python
+def add(a: int, b: int) -> int:
+    return a + b
+```
+
+3. Functions
+Functions are blocks of reusable code that perform a specific task. 
+Python uses `def` to define functions.
+
+```python
+def greet(name):
+    return "Hello, " + name
+
+print(greet("Alice"))
+```
+
+- Arguments: Functions can accept parameters.
+- Return Values: Functions can return values using the `return` statement.
+
+Lambda Functions:
+Anonymous functions that are defined using the `lambda` keyword.
+
+```python
+double = lambda x: x * 2
+print(double(4))  # Output: 8
+```
+
+4. Flow Control Statements
+
+Flow control statements are used to control the execution of code based on conditions and loops.
+
+#Conditionals
+
+- `if` statement: Used for conditional execution.
+
+```python
+age = 18
+if age >= 18:
+    print("You are an adult.")
+```
+
+- `if...else`: Executes a block of code when a condition is false.
+
+```python
+if age < 18:
+    print("You are a minor.")
+else:
+    print("You are an adult.")
+```
+
+- `elif`: Used for multiple conditions.
+
+```python
+if age < 13:
+    print("You are a child.")
+elif age < 18:
+    print("You are a teenager.")
+else:
+    print("You are an adult.")
+```
+
+#Loops
+
+- `for` loop: Iterates over a sequence (like a list or a range of numbers).
+
+```python
+for i in range(5):
+    print(i)
+```
+
+- `while` loop: Repeats a block of code as long as a condition is true.
+
+```python
+count = 0
+while count < 5:
+    print(count)
+    count += 1
+```
+
+- `break`: Exits the loop prematurely.
+
+```python
+for i in range(10):
+    if i == 5:
+        break
+    print(i)
+```
+
+- `continue`: Skips the current iteration and moves to the next.
+
+```python
+for i in range(5):
+    if i == 3:
+        continue
+    print(i)
+```
+
+5. Differences Between Python 2 and Python 3
+
+- Print Statement:
+  - Python 2: `print "Hello"`
+  - Python 3: `print("Hello")`
+
+- Integer Division:
+  - Python 2: Division between integers produces an integer (e.g., `5/2 = 2`).
+  - Python 3: Division between integers produces a float (e.g., `5/2 = 2.5`). Use `//` for integer division.
+
+- Unicode Handling:
+  - Python 2: Strings are ASCII by default. Use `u"..."` for Unicode.
+  - Python 3: Strings are Unicode by default.
+
+---
+
+Practice Problems:
+1. Write a Python function that calculates the factorial of a number using recursion.
+2. Write a Python script that prints all numbers from 1 to 100 but skips multiples of 3.
+3. Write a Python program that takes an integer as input and checks if it is even or odd.
+
+Summary:
+In this lesson, we explored Python’s built-in data types, how to declare variables, define functions, and control the flow of a program using `if`, `for`, and `while` statements. We also covered differences between Python 2 and Python 3.
