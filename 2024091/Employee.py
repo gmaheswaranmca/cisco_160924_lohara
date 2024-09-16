@@ -8,6 +8,6 @@ class Employee:
     def __str__(self):
         return f'{self.name}, {self.address}, {self.code}, {self.salary}'
 
-    
+
 mahesh = Employee('Maheswaran', '2/12, alagu nagar', 'PYABC10021', 200000)
-print(mahesh)
+print(mahesh)  
