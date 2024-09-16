@@ -1,0 +1,6 @@
+Automation Domain: Healthcare
+Patient Management 
+    - Add patient 
+    - Remove patient 
+
+Use: Python list 
