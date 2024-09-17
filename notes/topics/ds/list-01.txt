@@ -35,7 +35,8 @@ print(reversed_lst)  # Output: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 - append(): Adds a single element to the end of the list.
 - extend(): Extends the list by appending elements from an iterable.
 - insert(): Inserts an element at a specific position.
-- pop(): Removes and returns an element at a given index (default is the last element).
+- pop(): Removes and returns an element at a given index 
+(default is the last element).
 - remove(): Removes the first occurrence of a specified value.
 - index(): Returns the index of the first occurrence of a specified value.
 - sort(): Sorts the list in place.

@@ -1,0 +1,10 @@
+Patient Management [list as database]
+    - Add patient 
+    - Remove patient
+    +
+    Write list of patients into json file
+Patient Management [dict as database]
+    - Add patient 
+    - Remove patient   
+    +
+    Write dict of patients into json file

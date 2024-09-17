@@ -1,0 +1,91 @@
+Solution 1: Frequency of Elements Using Dictionary and File
+
+```python
+import json
+
+def frequency_of_elements():
+    # Step 1: Input a list of integers
+    user_input = input("Enter integers (separated by spaces): ")
+    int_list = list(map(int, user_input.split()))
+
+    # Step 2: Create a dictionary to store frequency of each integer
+    frequency_dict = {}
+    for num in int_list:
+        if num in frequency_dict:
+            frequency_dict[num] += 1
+        else:
+            frequency_dict[num] = 1
+
+    print(f"Frequency dictionary: {frequency_dict}")
+
+    # Step 3: Write the dictionary to a file
+    with open('frequency_dict.json', 'w') as file:
+        json.dump(frequency_dict, file)
+    print("Dictionary written to file.")
+
+    # Step 4: Read the file and print the dictionary
+    print("Reading from file...")
+    with open('frequency_dict.json', 'r') as file:
+        data = json.load(file)
+        print(data)
+
+frequency_of_elements()
+```
+
+---
+
+Solution 2: Set Operations and Tuple Creation
+
+```python
+def set_operations_tuple_creation():
+    # Step 1: Input a string
+    sentence = input("Enter a sentence: ")
+
+    # Step 2: Split the string into a list of words
+    word_list = sentence.split()
+    print(f"List of words: {word_list}")
+
+    # Step 3: Convert the list to a set to remove duplicates
+    word_set = set(word_list)
+    print(f"Set (no duplicates): {word_set}")
+
+    # Step 4: Convert the set to a frozenset
+    word_frozenset = frozenset(word_set)
+    print(f"Frozenset: {word_frozenset}")
+
+    # Step 5: Create a tuple with the lengths of the words in the frozenset
+    word_length_tuple = tuple(len(word) for word in word_frozenset)
+    print(f"Tuple of word lengths: {word_length_tuple}")
+
+set_operations_tuple_creation()
+```
+
+---
+
+Solution 3: Creating a Dictionary from Two Lists
+
+```python
+import json
+
+def dictionary_from_two_lists():
+    # Step 1: Input the list of keys and values from the user
+    keys = input("Enter keys (separated by spaces): ").split()
+    values = input("Enter values (separated by spaces): ").split()
+
+    # Step 2: Create a dictionary using the keys and values
+    dictionary = {keys[i]: values[i] for i in range(len(keys))}
+    print(f"Dictionary: {dictionary}")
+
+    # Step 3: Write the dictionary to a file
+    with open('dict_from_lists.json', 'w') as file:
+        json.dump(dictionary, file)
+    print("Dictionary written to file.")
+
+    # Step 4: Read the dictionary from the file and print it
+    print("Reading from file...")
+    with open('dict_from_lists.json', 'r') as file:
+        data = json.load(file)
+        print(data)
+
+dictionary_from_two_lists()
+```

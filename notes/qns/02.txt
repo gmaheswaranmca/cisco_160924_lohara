@@ -1,0 +1,55 @@
+Question 1: Frequency of Elements Using Dictionary and File
+Write a Python program that:
+1. Takes a list of integers from the user.
+2. Creates a dictionary where the keys are the unique integers and 
+the values are their frequencies in the list.
+3. Write this dictionary to a file.
+4. Read the file and print the dictionary.
+
+Sample Output:
+```
+Enter integers (separated by spaces): 4 2 7 4 9 2 4
+Frequency dictionary: {4: 3, 2: 2, 7: 1, 9: 1}
+Dictionary written to file.
+Reading from file...
+{4: 3, 2: 2, 7: 1, 9: 1}
+```
+
+Question 2: Set Operations and Tuple Creation
+Write a Python program that:
+1. Accepts a string input from the user.
+2. Splits the string into words and stores them in a list.
+3. Removes duplicate words using a set.
+4. Converts the set to a frozenset.
+5. Create a tuple where each element is the length of each word in the frozenset.
+6. Print the tuple.
+
+Sample Output:
+```
+Enter a sentence: Python is fun and Python is cool
+List of words: ['Python', 'is', 'fun', 'and', 'Python', 'is', 'cool']
+Set (no duplicates): {'fun', 'Python', 'is', 'cool', 'and'}
+Frozenset: frozenset({'fun', 'Python', 'is', 'cool', 'and'})
+Tuple of word lengths: (3, 6, 2, 4, 3)
+```
+
+Question 3: Creating a Dictionary from Two Lists
+Write a Python program that:
+1. Asks the user for two lists of the same length: 
+one for keys and one for values.
+2. Create a dictionary where the keys are from the first list and 
+the values are from the second list.
+3. Write this dictionary to a file.
+4. Read the file and print the dictionary.
+
+Sample Output:
+```
+Enter keys (separated by spaces): name age city
+Enter values (separated by spaces): John 25 London
+Dictionary: {'name': 'John', 'age': 25, 'city': 'London'}
+Dictionary written to file.
+Reading from file...
+{'name': 'John', 'age': 25, 'city': 'London'}
+```
+
+Would you like me to provide solutions for these as well?

@@ -1,0 +1,97 @@
+
+#1
+Coding question that involves the use of list, 
+tuple, set, frozenset, dictionary, and file handling:
+Question:
+Create a Python program that performs the following operations:
+1. Ask the user to input a list of integers.
+2. Convert the list to a tuple and display it.
+3. Convert the list to a set and remove any duplicates.
+4. Convert the set to a frozenset and display it.
+5. Create a dictionary where the keys are integers 
+from the list and the values are their squares.
+6. Write the contents of the dictionary to a file.
+7. Read the contents of the file and display it.
+
+Constraints:
+- Ensure the input list contains at least 5 integers.
+- Use exception handling to manage any input or file errors.
+
+Sample Output:
+```
+Enter at least 5 integers (separated by spaces): 4 2 7 4 9 2
+Original list: [4, 2, 7, 4, 9, 2]
+Converted tuple: (4, 2, 7, 4, 9, 2)
+Converted set (removing duplicates): {2, 4, 7, 9}
+Converted frozenset: frozenset({2, 4, 7, 9})
+Dictionary of squares: {4: 16, 2: 4, 7: 49, 9: 81}
+Writing dictionary to file...
+Reading from file...
+{4: 16, 2: 4, 7: 49, 9: 81}
+```
+
+
+#2
+Question: List and Tuple Operations with File Handling
+Write a Python program that:
+1. Accepts a list of words from the user.
+2. Converts the list into a tuple.
+3. Writes both the list and tuple to a text file, each on a new line.
+4. Reads the contents of the file and prints them out.   
+Sample Output:
+```
+Enter words (separated by spaces): apple banana mango grape
+List: ['apple', 'banana', 'mango', 'grape']
+Tuple: ('apple', 'banana', 'mango', 'grape')
+Data written to file.
+Reading from file:
+List: ['apple', 'banana', 'mango', 'grape']
+Tuple: ('apple', 'banana', 'mango', 'grape')
+```
+
+#3
+Question: Set Operations and Dictionary Creation
+Create a Python program that:
+1. Takes a list of student names as input.
+2. Converts the list to a set to remove any duplicate names.
+3. Convert the set to a frozenset.
+4. Create a dictionary 
+where the keys are student names (from the frozenset) and 
+the values are the length of each name.
+5. Write the dictionary to a JSON file and read it back, 
+displaying the dictionary contents.
+Sample Output:
+```
+Enter student names (separated by spaces): John Emily John Kate Emily
+Original list: ['John', 'Emily', 'John', 'Kate', 'Emily']
+Set (no duplicates): {'John', 'Emily', 'Kate'}
+Frozenset: frozenset({'John', 'Emily', 'Kate'})
+Dictionary of name lengths: {'John': 4, 'Emily': 5, 'Kate': 4}
+Dictionary written to JSON file.
+Reading from JSON file...
+{'John': 4, 'Emily': 5, 'Kate': 4}
+```
+
+#4
+Question: Number Set and File Handling
+Write a Python program that:
+1. Prompts the user to enter a list of 10 unique integers.
+2. Stores the unique integers in a set.
+3. Convert the set to a frozenset.
+4. Create a dictionary where the keys are the integers and 
+the values are their cube (i.e., number^3).
+5. Write the dictionary to a file in JSON format.
+6. Read the file and print out the dictionary.
+
+Sample Output:
+```
+Enter 10 unique integers: 2 3 5 7 11 13 17 19 23 29
+Set of numbers: {2, 3, 5, 7, 11, 13, 17, 19, 23, 29}
+Frozenset: frozenset({2, 3, 5, 7, 11, 13, 17, 19, 23, 29})
+Dictionary of cubes: {2: 8, 3: 27, 5: 125, 7: 343, 11: 1331, 13: 2197, 17: 4913, 19: 6859, 23: 12167, 29: 24389}
+Dictionary written to JSON file.
+Reading from JSON file...
+{2: 8, 3: 27, 5: 125, 7: 343, 11: 1331, 13: 2197, 17: 4913, 19: 6859, 23: 12167, 29: 24389}
+```
+
+Let me know if you'd like sample solutions for any of these questions!

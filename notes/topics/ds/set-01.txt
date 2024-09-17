@@ -3,7 +3,9 @@ Here are intermediate-level notes on Python sets:
 1. Overview of Sets
 - A set is an unordered collection of unique elements.
 - Sets are mutable, meaning elements can be added or removed.
-- Sets are useful for eliminating duplicates and performing mathematical set operations like union, intersection, difference, and symmetric difference.
+- Sets are useful for eliminating duplicates and 
+performing mathematical set operations like 
+    union, intersection, difference, and symmetric difference.
 
 2. Set Creation
 - You can create a set using the `set()` constructor or curly braces `{}`.
@@ -42,7 +44,8 @@ print(A ^ B)  # Output: {1, 2, 5, 6}
 ```
 
 4. Set Methods
-- Adding elements: `add()` is used to add a single element, and `update()` is used to add multiple elements.
+- Adding elements: `add()` is used to add a single element, 
+and `update()` is used to add multiple elements.
   
 ```python
 s = {1, 2}

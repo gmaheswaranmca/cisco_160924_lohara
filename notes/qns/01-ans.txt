@@ -1,0 +1,149 @@
+
+Solution 1: Combined Operations with List, Tuple, Set, Frozenset, Dictionary, and File
+
+```python
+import json
+
+def combined_operations():
+    # Step 1: Get a list of integers from the user
+    user_input = input("Enter at least 5 integers (separated by spaces): ")
+    int_list = list(map(int, user_input.split()))
+
+    # Step 2: Convert the list to a tuple and display it
+    int_tuple = tuple(int_list)
+    print(f"Original list: {int_list}")
+    print(f"Converted tuple: {int_tuple}")
+
+    # Step 3: Convert the list to a set and remove any duplicates
+    int_set = set(int_list)
+    print(f"Converted set (removing duplicates): {int_set}")
+
+    # Step 4: Convert the set to a frozenset and display it
+    int_frozenset = frozenset(int_set)
+    print(f"Converted frozenset: {int_frozenset}")
+
+    # Step 5: Create a dictionary where the keys are integers and the values are their squares
+    square_dict = {num: num  2 for num in int_frozenset}
+    print(f"Dictionary of squares: {square_dict}")
+
+    # Step 6: Write the dictionary to a JSON file
+    with open('squares.json', 'w') as file:
+        json.dump(square_dict, file)
+    print("Writing dictionary to file...")
+
+    # Step 7: Read the file and print its contents
+    print("Reading from file...")
+    with open('squares.json', 'r') as file:
+        data = json.load(file)
+        print(data)
+
+combined_operations()
+```
+
+---
+Solution 2: List and Tuple Operations with File Handling
+
+```python
+def list_tuple_file_operations():
+    # Step 1: Get a list of words from the user
+    user_input = input("Enter words (separated by spaces): ")
+    word_list = user_input.split()
+
+    # Step 2: Convert the list into a tuple
+    word_tuple = tuple(word_list)
+
+    # Step 3: Write the list and tuple to a text file
+    with open('list_tuple.txt', 'w') as file:
+        file.write(f"List: {word_list}\n")
+        file.write(f"Tuple: {word_tuple}\n")
+    
+    print(f"List: {word_list}")
+    print(f"Tuple: {word_tuple}")
+    print("Data written to file.")
+
+    # Step 4: Read the contents of the file and print them
+    print("Reading from file:")
+    with open('list_tuple.txt', 'r') as file:
+        for line in file:
+            print(line.strip())
+
+list_tuple_file_operations()
+```
+
+---
+
+Solution 3: Set Operations and Dictionary Creation
+
+```python
+import json
+
+def set_operations_with_dictionary():
+    # Step 1: Input a list of student names
+    student_names = input("Enter student names (separated by spaces): ").split()
+
+    # Step 2: Convert the list to a set to remove duplicates
+    student_set = set(student_names)
+    print(f"Set (no duplicates): {student_set}")
+
+    # Step 3: Convert the set to a frozenset
+    student_frozenset = frozenset(student_set)
+    print(f"Frozenset: {student_frozenset}")
+
+    # Step 4: Create a dictionary with names and their lengths
+    name_length_dict = {name: len(name) for name in student_frozenset}
+    print(f"Dictionary of name lengths: {name_length_dict}")
+
+    # Step 5: Write the dictionary to a JSON file
+    with open('student_names.json', 'w') as file:
+        json.dump(name_length_dict, file)
+    print("Dictionary written to JSON file.")
+
+    # Step 6: Read from the JSON file and display the contents
+    print("Reading from JSON file...")
+    with open('student_names.json', 'r') as file:
+        data = json.load(file)
+        print(data)
+
+set_operations_with_dictionary()
+```
+
+---
+
+Solution 3: Number Set and File Handling
+
+```python
+import json
+
+def number_set_file_handling():
+    # Step 1: Input 10 unique integers from the user
+    user_input = input("Enter 10 unique integers: ")
+    number_list = list(map(int, user_input.split()))
+
+    # Step 2: Convert the list into a set to remove any duplicates
+    number_set = set(number_list)
+    print(f"Set of numbers: {number_set}")
+
+    # Step 3: Convert the set to a frozenset
+    number_frozenset = frozenset(number_set)
+    print(f"Frozenset: {number_frozenset}")
+
+    # Step 4: Create a dictionary where keys are numbers and values are cubes
+    cube_dict = {num: num  3 for num in number_frozenset}
+    print(f"Dictionary of cubes: {cube_dict}")
+
+    # Step 5: Write the dictionary to a file in JSON format
+    with open('cubes.json', 'w') as file:
+        json.dump(cube_dict, file)
+    print("Dictionary written to JSON file.")
+
+    # Step 6: Read the file and display the dictionary
+    print("Reading from JSON file...")
+    with open('cubes.json', 'r') as file:
+        data = json.load(file)
+        print(data)
+
+number_set_file_handling()
+```
+
+---
+
