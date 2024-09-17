@@ -1,0 +1,66 @@
+Yeserday:
+1
+    github
+    github repo
+    PAT 
+    git clone with token 
+    local repo 
+    1. update to local repo
+    add + commit 
+    terminal:
+        $ git add . | git commit -m "Intro to Py"
+        to check:
+            $ git status 
+    vsc:
+        source control 
+            -> changes section 
+                -> <+>
+        commit message + <commit>
+    2. update local repo to remote repo [sync]
+        pull + push
+    terminal: 
+        $ git pull origin main | git push origin main 
+     vsc: 
+        <sync> and confirmation 
+2 
+    Python 
+        types 
+        identifiers 
+            variable function class module package  
+            object attributes 
+        input()     reads string from console / keyboard
+        print()     prints data on console 
+
+        str 
+        list 
+        tuple 
+
+        flow control 
+            if 
+            if .. else 
+            if .. elif .. else 
+            for I in range(start[,end[,step]])
+
+            range(10)   #0..9 
+            range(10,100) #10 .. 99
+            range(100,10, -1) #100 .. 11
+
+            for e in str:
+            for e in list:
+            for e in tuple:
+            
+            here e is every element 
+
+3
+approach for assignment 
+
+1. class Patient {id, name}
+2. patients[]
+3. patient_add(id, name)
+4. patient_remove(id)
+5. patient_display()
+6. menu 
+7. menus 
+8. driver program
+
+    
