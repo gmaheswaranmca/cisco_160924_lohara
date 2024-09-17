@@ -1,0 +1,92 @@
+In Python, you can write an object to a file and read it back using the `pickle` module. This process is called serialization (or pickling in Python). The `pickle` module converts Python objects into a byte stream, which can be written to a file, and later deserialized (unpickled) back into the original Python object.
+
+Writing an Object to a File (Pickling)
+
+To serialize an object and write it to a file, you can use `pickle.dump()`:
+
+```python
+import pickle
+
+# Sample Python object (can be any object like a dictionary, list, class instance, etc.)
+data = {'name': 'John', 'age': 30, 'city': 'New York'}
+
+# Writing the object to a file
+with open('data.pickle', 'wb') as file:  # 'wb' means write in binary mode
+    pickle.dump(data, file)
+
+print("Object has been serialized and written to file")
+```
+
+Reading an Object from a File (Unpickling)
+
+To deserialize an object from a file and load it back into a Python program, use `pickle.load()`:
+
+```python
+import pickle
+
+# Reading the object from the file
+with open('data.pickle', 'rb') as file:  # 'rb' means read in binary mode
+    data = pickle.load(file)
+
+print("Object has been deserialized:")
+print(data)
+```
+
+Key Points to Remember:
+1. Binary mode (`'wb'` and `'rb'`) is necessary when writing and reading pickle files, as pickled objects are stored in a binary format.
+2. Security Warning: Be cautious when unpickling objects from an untrusted source, as it may execute arbitrary code and introduce security risks.
+
+Example with Custom Class
+
+You can also serialize and deserialize objects of custom classes:
+
+```python
+import pickle
+
+# Custom class
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __repr__(self):
+        return f'Person(name={self.name}, age={self.age})'
+
+# Creating an object of the class
+person = Person("Alice", 25)
+
+# Writing the object to a file
+with open('person.pickle', 'wb') as file:
+    pickle.dump(person, file)
+
+# Reading the object back from the file
+with open('person.pickle', 'rb') as file:
+    loaded_person = pickle.load(file)
+
+print("Deserialized object:", loaded_person)
+```
+
+Advanced: Pickling with `shelve`
+
+For more complex storage (like multiple objects), you can use the `shelve` module, which acts like a persistent, dictionary-like object to store and retrieve pickled objects.
+
+```python
+import shelve
+
+# Writing objects to a shelve file
+with shelve.open('mydata') as db:
+    db['person1'] = {'name': 'Alice', 'age': 30}
+    db['person2'] = {'name': 'Bob', 'age': 35}
+
+# Reading objects back from the shelve file
+with shelve.open('mydata') as db:
+    print(db['person1'])  # Output: {'name': 'Alice', 'age': 30}
+    print(db['person2'])  # Output: {'name': 'Bob', 'age': 35}
+```
+
+This is a convenient way to store multiple objects in a file, similar to a small database.
+
+Conclusion
+- Pickling is a powerful way to save Python objects to files.
+- Unpickling loads those objects back into memory.
+- Always be cautious when unpickling objects, especially from unknown sources, due to potential security risks.
