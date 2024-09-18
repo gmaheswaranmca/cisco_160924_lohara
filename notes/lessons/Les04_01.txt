@@ -1,0 +1,274 @@
+Lesson 4: Object-Oriented Programming (OOP) Concepts in Python
+
+---
+
+1. Key Concepts of OOP
+
+Object-Oriented Programming (OOP) is a paradigm in Python 
+that organizes code using objects and classes. 
+It makes it easier to structure code 
+for large applications and reuse components.
+
+Main Concepts of OOP:
+- Class: A blueprint for creating objects (instances). 
+It defines attributes (variables) and methods (functions).
+- Object: An instance of a class. It contains the data and functions defined in the class.
+- Attributes: Variables that belong to an object or class.
+- Methods: Functions that operate on the data within an object.
+- Encapsulation: Hiding the internal details of an object and exposing only necessary components.
+- Inheritance: A mechanism where one class can inherit attributes and methods from another class.
+- Polymorphism: A concept where the same function can operate on different types of objects.
+- Abstraction: Hiding the complexity of an implementation and providing a simple interface.
+
+---
+
+2. Defining a Class and Creating Objects
+
+A class is defined using the `class` keyword, followed by the class name and a colon. Inside the class, we can define attributes and methods.
+
+```python
+class Dog:
+    # Class attribute
+    species = "Canis lupus familiaris"
+    
+    # Constructor (initializer) method
+    def __init__(self, name, age):
+        # Instance attributes
+        self.name = name
+        self.age = age
+    
+    # Instance method
+    def description(self):
+        return f"{self.name} is {self.age} years old."
+    
+    # Another instance method
+    def speak(self, sound):
+        return f"{self.name} says {sound}."
+
+# Creating an object (instance of the class)
+dog1 = Dog("Buddy", 3)
+print(dog1.description())  # Output: Buddy is 3 years old.
+print(dog1.speak("Woof!"))  # Output: Buddy says Woof!
+```
+
+Key Points:
+- `__init__()` is a special method called the constructor. It initializes the object when it is created.
+- `self` refers to the current object instance and is used to access attributes and methods of the class.
+- Instance attributes are specific to each object, while class attributes (like `species`) are shared across all objects of the class.
+
+---
+
+3. Encapsulation
+
+Encapsulation is the practice of keeping the internal details of an object hidden from the outside world. 
+Python supports this by convention, using an underscore (`_`) or double underscore (`__`) 
+to indicate private or protected attributes/methods.
+
+```python
+class Car:
+    def __init__(self, model, year):
+        self.model = model   # Public attribute
+        self._year = year    # Protected attribute
+    
+    def get_year(self):
+        return self._year
+
+    def _service(self):  # Protected method
+        print(f"{self.model} is being serviced.")
+
+car1 = Car("Toyota", 2015)
+print(car1.get_year())  # Accessing protected attribute via method
+```
+
+- Public attributes/methods: Accessible from outside the class.
+- Protected attributes/methods (`_`): By convention, not meant for outside use, but still accessible.
+- Private attributes/methods (`__`): Internally used within the class only, Python "name-mangles" them to prevent access from outside.
+
+---
+
+4. Inheritance
+
+Inheritance allows a class (child or subclass) 
+to inherit the properties and methods of another class (parent or superclass).
+
+```python
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    
+    def speak(self):
+        return f"{self.name} makes a sound."
+
+# Dog class inherits from Animal class
+class Dog(Animal):
+    def speak(self):
+        return f"{self.name} barks."
+
+# Cat class inherits from Animal class
+class Cat(Animal):
+    def speak(self):
+        return f"{self.name} meows."
+
+dog = Dog("Buddy")
+cat = Cat("Whiskers")
+
+print(dog.speak())  # Output: Buddy barks.
+print(cat.speak())  # Output: Whiskers meows.
+```
+
+Key Points:
+- The child class inherits all the attributes and methods from the parent class.
+- Child classes can override methods of the parent class (e.g., `speak()` in `Dog` and `Cat` classes).
+
+---
+
+5. Polymorphism
+
+Polymorphism allows methods to work with objects of different types. 
+For example, you can define the same method in different classes, 
+and Python will automatically choose the correct one at runtime.
+
+```python
+class Bird:
+    def speak(self):
+        return "Bird sings."
+
+class Lion:
+    def speak(self):
+        return "Lion roars."
+
+def animal_speak(animal):
+    print(animal.speak())
+
+bird = Bird()
+lion = Lion()
+
+animal_speak(bird)  # Output: Bird sings.
+animal_speak(lion)  # Output: Lion roars.
+```
+
+Key Points:
+- Different classes have the same method name (`speak()`), 
+but the method behaves differently depending on the object type.
+
+---
+
+6. Abstraction
+
+Abstraction hides the complexity of the system by exposing only the relevant details. 
+In Python, we achieve abstraction using abstract base classes (ABCs) from the `abc` module.
+
+```python
+from abc import ABC, abstractmethod
+
+class Vehicle(ABC):
+    @abstractmethod
+    def start(self):
+        pass
+
+class Car(Vehicle):
+    def start(self):
+        return "Car starts."
+
+class Bike(Vehicle):
+    def start(self):
+        return "Bike starts."
+
+car = Car()
+bike = Bike()
+print(car.start())  # Output: Car starts.
+print(bike.start())  # Output: Bike starts.
+```
+
+Key Points:
+- Abstract classes cannot be instantiated directly; they are meant to be subclassed.
+- Abstract methods must be implemented by the subclass.
+
+---
+
+7. Special Methods (Dunder/Magic Methods)
+
+These methods are prefixed and suffixed with double underscores (`__`) and 
+are used for operator overloading, custom object representation, etc.
+
+```python
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        return f"Point({self.x}, {self.y})"
+    
+    def __add__(self, other):
+        return Point(self.x + other.x, self.y + other.y)
+
+point1 = Point(2, 3)
+point2 = Point(4, 5)
+
+print(point1 + point2)  # Output: Point(6, 8)
+```
+
+Common Magic Methods:
+- `__init__()`: Constructor
+- `__repr__()`: String representation of the object
+- `__add__()`: Defines behavior for `+` operator
+- `__len__()`: Defines behavior for `len()` function
+
+---
+
+8. Class and Static Methods
+
+- Class methods are methods that have access to the class itself (using `cls`).
+- Static methods are methods that do not depend on the class or instance (no `self` or `cls`).
+
+```python
+class MyClass:
+    class_var = 0
+    
+    @classmethod
+    def class_method(cls):
+        return cls.class_var
+    
+    @staticmethod
+    def static_method():
+        return "This is a static method."
+
+print(MyClass.class_method())  # Output: 0
+print(MyClass.static_method())  # Output: This is a static method.
+```
+
+---
+
+9. Composition
+
+Composition is another form of relationship between classes 
+where one class contains an object of another class as a member, 
+instead of inheriting from it.
+
+```python
+class Engine:
+    def start(self):
+        return "Engine started."
+
+class Car:
+    def __init__(self):
+        self.engine = Engine()  # Composition
+    
+    def start(self):
+        return self.engine.start()
+
+car = Car()
+print(car.start())  # Output: Engine started.
+```
+
+---
+
+10. Summary of OOP Concepts in Python
+
+- Class and Object: Define classes to model real-world entities, create objects (instances) of these classes.
+- Encapsulation: Protect the inner workings of objects and expose only what is necessary.
+- Inheritance: Allows code reuse and the extension of functionality.
+- Polymorphism: Write methods that work with objects of different classes.
+- Abstraction: Simplify complex systems by exposing only essential information.
+- Magic Methods: Implement custom behaviors for built-in operations using dunder methods.

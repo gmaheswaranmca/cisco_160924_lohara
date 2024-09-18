@@ -1,0 +1,239 @@
+Lesson 3: Functions, Modules, and File I/O in Python
+
+---
+
+1. Functions in Python
+
+Functions are reusable blocks of code designed to perform a specific task. 
+They are defined using the `def` keyword.
+
+#Basic Function Syntax:
+```python
+def greet(name):
+    return f"Hello, {name}!"
+```
+
+#Positional and Keyword Arguments:
+- Positional arguments are the most common. They must be passed in the correct order.
+- Keyword arguments allow you to specify the argument name when calling the function.
+
+```python
+def greet(name, greeting="Hello"):
+    return f"{greeting}, {name}!"
+
+print(greet("Alice"))  # Output: Hello, Alice!
+print(greet("Alice", greeting="Hi"))  # Output: Hi, Alice!
+```
+
+#Default Parameters:
+You can assign default values to function parameters.
+```python
+def add(x, y=10):
+    return x + y
+
+print(add(5))  # Output: 15
+print(add(5, 20))  # Output: 25
+```
+
+#Variable-Length Arguments:
+- `*args` allows passing a variable number of non-keyword arguments.
+- `kwargs` allows passing a variable number of keyword arguments.
+
+```python
+def total(*args):
+    return sum(args)
+
+def info(kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+print(total(1, 2, 3))  # Output: 6
+info(name="Alice", age=30)  # Output: name: Alice, age: 30
+```
+
+---
+
+2. Modules in Python
+
+A module is simply a Python file (`.py`) 
+that contains functions, classes, or variables you can use in other files. 
+It allows code reuse.
+
+#Importing Modules:
+You can import a module using the `import` statement.
+```python
+import math
+
+print(math.sqrt(16))  # Output: 4.0
+```
+
+#Importing Specific Functions or Variables:
+You can import specific functions or variables from a module using `from`.
+```python
+from math import sqrt
+
+print(sqrt(25))  # Output: 5.0
+```
+
+#Creating Your Own Module:
+1. Create a Python file (e.g., `mymodule.py`):
+   ```python
+   def greet(name):
+       return f"Hello, {name}!"
+   ```
+
+2. Use the module in another file:
+   ```python
+   import mymodule
+
+   print(mymodule.greet("Alice"))  # Output: Hello, Alice!
+   ```
+
+#Organizing Modules with Packages:
+A package is a directory containing multiple modules and a special `__init__.py` file (can be empty). 
+This helps organize modules across multiple files.
+
+```text
+mypackage/
+    __init__.py
+    module1.py
+    module2.py
+```
+
+You can then import modules like:
+```python
+from mypackage import module1
+```
+
+---
+
+3. File I/O Operations
+
+File handling is an important part of many applications, 
+allowing programs to read from and write to files. 
+Python provides built-in methods for working with files.
+
+#Opening Files:
+- `r`: Read (default)
+- `w`: Write (creates a new file or truncates an existing file)
+- `a`: Append (adds content to the end of the file)
+- `rb`, `wb`: Read/Write in binary mode
+
+```python
+file = open("example.txt", "r")
+```
+
+#Reading from a File:
+- `read()`: Reads the entire content of the file.
+- `readline()`: Reads one line at a time.
+- `readlines()`: Reads the file into a list, with each line as an element.
+
+```python
+with open("example.txt", "r") as file:
+    content = file.read()
+    print(content)
+```
+
+#Writing to a File:
+- `write()`: Writes a string to the file.
+- `writelines()`: Writes a list of strings to the file.
+
+```python
+with open("example.txt", "w") as file:
+    file.write("Hello, World!")
+```
+
+#Appending to a File:
+```python
+with open("example.txt", "a") as file:
+    file.write("\nThis is an additional line.")
+```
+
+#Closing Files:
+You should always close a file after you’re done with it to free up system resources. 
+Using a `with` block ensures the file is closed automatically.
+
+```python
+file = open("example.txt", "r")
+# Perform operations
+file.close()  # Manually closing the file
+```
+
+#File I/O with Error Handling:
+Use a `try-except-finally` block to handle file I/O errors gracefully.
+```python
+try:
+    file = open("example.txt", "r")
+    content = file.read()
+except FileNotFoundError:
+    print("File not found.")
+finally:
+    file.close()
+```
+
+---
+
+4. Pythonic Idioms for Functions and Modules
+
+#Unpacking Arguments:
+You can unpack lists or dictionaries as arguments using `*` and `` in function calls.
+```python
+def sum_numbers(a, b, c):
+    return a + b + c
+
+args = [1, 2, 3]
+print(sum_numbers(*args))  # Output: 6
+
+kwargs = {"a": 1, "b": 2, "c": 3}
+print(sum_numbers(kwargs))  # Output: 6
+```
+
+#Lambda Functions:
+Anonymous functions defined with `lambda`. Useful for short, one-time functions.
+```python
+add = lambda x, y: x + y
+print(add(3, 4))  # Output: 7
+```
+
+#Using `__name__ == "__main__"`:
+This construct allows you to make your Python file both importable as a module and executable as a script.
+```python
+# mymodule.py
+def greet(name):
+    print(f"Hello, {name}!")
+
+if __name__ == "__main__":
+    greet("World")  # This runs only when executed directly, not when imported
+```
+
+---
+
+5. Working with Files: Best Practices
+
+#Using `with` for File Handling:
+Using the `with` statement ensures that the file is closed automatically 
+after the operation, even if an error occurs.
+
+```python
+with open("example.txt", "r") as file:
+    data = file.read()
+```
+
+#Binary File Operations:
+For non-text files (images, videos, etc.), you can read/write in binary mode.
+
+```python
+with open("image.jpg", "rb") as image:
+    data = image.read()
+
+with open("copy.jpg", "wb") as copy:
+    copy.write(data)
+```
+
+---
+
+Summary of Lesson 3:
+
+- Functions: Understand how to define and use functions with different types of arguments (`*args`, `kwargs`), and how to manage function calls efficiently.
+- Modules: Learn how to import built-in and custom modules and how to organize code using packages.
+- File I/O: Understand the various methods for reading from and writing to files, as well as handling errors that might occur during file operations.
