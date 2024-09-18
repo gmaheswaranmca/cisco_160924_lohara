@@ -1,0 +1,209 @@
+The `os` module in Python provides 
+a way to interact with the operating system. 
+It allows you to perform tasks like 
+    file manipulation, 
+    directory management, and 
+    accessing environment variables.
+
+Here are some key functionalities provided by the `os` module:
+
+1. Working with Directories
+
+- `os.getcwd()`: Returns the current working directory.
+    ```python
+    import os
+    print(os.getcwd())  # Prints the current working directory
+    ```
+
+- `os.chdir(path)`: Changes the current working directory to the specified path.
+    ```python
+    os.chdir('/path/to/directory')
+    ```
+
+- `os.listdir(path='.')`: 
+    Lists all files and directories in the specified directory. 
+    If no directory is specified, 
+    it lists the contents of the current directory.
+    ```python
+    os.listdir()  # Lists files in the current directory
+    ```
+
+- `os.mkdir(path)`: 
+    Creates a new directory at the specified path.
+    ```python
+    os.mkdir('new_directory')  # Creates a directory named 'new_directory'
+    ```
+
+- `os.makedirs(path)`: 
+    Recursively creates directories along the specified path.
+    ```python
+    os.makedirs('parent/child/grandchild')  # Creates the entire hierarchy of directories
+    ```
+
+- `os.rmdir(path)`: 
+    Removes the specified directory if it is empty.
+    ```python
+    os.rmdir('empty_directory')
+    ```
+
+- `os.removedirs(path)`: 
+    Recursively removes directories.
+    ```python
+    os.removedirs('parent/child/grandchild')
+    ```
+
+2. File Handling
+
+- `os.remove(path)`: 
+    Deletes the specified file.
+    ```python
+    os.remove('file.txt')  # Deletes 'file.txt'
+    ```
+
+- `os.rename(src, dst)`: Renames a file or directory from `src` to `dst`.
+    ```python
+    os.rename('old_name.txt', 'new_name.txt')
+    ```
+
+- `os.stat(path)`: Returns information about a file or directory, such as size, last modified time, etc.
+    ```python
+    info = os.stat('file.txt')
+    print(info.st_size)  # Prints the size of 'file.txt'
+    ```
+
+3. Environment Variables
+
+- `os.getenv(key, default=None)`: 
+    Returns the value of the environment variable `key`. 
+    If it doesn't exist, it returns `default`.
+    ```python
+    path = os.getenv('PATH')
+    print(path)
+    ```
+
+- `os.putenv(key, value)`: 
+    Sets the value of an environment variable.
+    ```python
+    os.putenv('MY_ENV_VAR', '123')
+    ```
+
+- `os.environ`: 
+    A dictionary-like object containing the environment variables.
+    ```python
+    print(os.environ['HOME'])  # Prints the home directory
+    ```
+
+4. Path Manipulation (in conjunction with `os.path`)
+
+- `os.path.join(path, *paths)`: 
+    Joins multiple paths into one.
+    ```python
+    full_path = os.path.join('/home', 'user', 'file.txt')
+    ```
+
+- `os.path.exists(path)`: 
+    Returns `True` if the specified path exists.
+    ```python
+    print(os.path.exists('file.txt'))  # Checks if 'file.txt' exists
+    ```
+
+- `os.path.isfile(path)`: 
+    Returns `True` if the specified path is a file.
+    ```python
+    print(os.path.isfile('file.txt'))  # Checks if 'file.txt' is a file
+    ```
+
+- `os.path.isdir(path)`: 
+    Returns `True` if the specified path is a directory.
+    ```python
+    print(os.path.isdir('/home/user'))  # Checks if the path is a directory
+    ```
+
+- `os.path.abspath(path)`: 
+    Returns the absolute path of the specified file or directory.
+    ```python
+    print(os.path.abspath('file.txt'))
+    ```
+
+5. Executing System Commands
+
+- `os.system(command)`: Runs a system command.
+    ```python
+    os.system('ls')  # Executes the 'ls' command on Linux/macOS (or 'dir' on Windows)
+    ```
+
+- `os.popen(command)`: 
+    Opens a pipe to or from a command. 
+    Returns a file object connected to the command.
+    ```python
+    with os.popen('ls') as f:
+        print(f.read())
+    ```
+
+6. Process Management
+
+- `os.getpid()`: 
+    Returns the current process ID.
+    ```python
+    print(os.getpid())  # Prints the process ID
+    ```
+
+- `os.getppid()`: 
+    Returns the parent process ID.
+    ```python
+    print(os.getppid())  # Prints the parent process ID
+    ```
+
+- `os.fork()` (Unix only): 
+    Forks the current process into two processes.
+    ```python
+    pid = os.fork()
+    if pid == 0:
+        print("Child process")
+    else:
+        print("Parent process")
+    ```
+
+- `os.execv(path, args)`: 
+    Replaces the current process 
+    with a new one specified by the path and arguments.
+    ```python
+    os.execv('/bin/ls', ['ls', '-l'])
+    ```
+
+7. Permissions and Ownership
+
+- `os.chmod(path, mode)`: 
+    Changes the permission mode of the specified file or directory.
+    ```python
+    os.chmod('file.txt', 0o644)  # Changes the permissions of 'file.txt'
+    ```
+
+- `os.chown(path, uid, gid)`: 
+    Changes the owner and group of the specified file or directory.
+    ```python
+    os.chown('file.txt', 1000, 1000)
+    ```
+
+Example Usage
+Here’s a basic example demonstrating some functionalities of the `os` module:
+```python
+import os
+
+# Get current working directory
+print("Current Directory:", os.getcwd())
+
+# List contents of the directory
+print("Directory Contents:", os.listdir())
+
+# Create a new directory
+os.mkdir('new_folder')
+
+# Change into the new directory
+os.chdir('new_folder')
+print("Changed to:", os.getcwd())
+
+# Go back to the previous directory and remove the folder
+os.chdir('..')
+os.rmdir('new_folder')
+```

@@ -128,7 +128,7 @@ def number_set_file_handling():
     print(f"Frozenset: {number_frozenset}")
 
     # Step 4: Create a dictionary where keys are numbers and values are cubes
-    cube_dict = {num: num  3 for num in number_frozenset}
+    cube_dict = {num: num ** 3 for num in number_frozenset}
     print(f"Dictionary of cubes: {cube_dict}")
 
     # Step 5: Write the dictionary to a file in JSON format

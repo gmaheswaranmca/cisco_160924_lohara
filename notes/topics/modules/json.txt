@@ -1,0 +1,180 @@
+The `json` module in Python provides functions 
+for working with JSON (JavaScript Object Notation), 
+a lightweight data format used for data interchange. 
+This module allows you to convert Python objects to JSON and vice versa.
+
+Here are the key functions in the `json` module:
+
+1. `json.dumps()`: Convert Python object to JSON string
+
+This function is used to serialize a Python object into a JSON-formatted string.
+
+Example:
+```python
+import json
+
+# Python object (a dictionary)
+python_data = {
+    "name": "John",
+    "age": 30,
+    "is_student": False,
+    "courses": ["Math", "Science"]
+}
+
+# Convert Python object to JSON string
+json_string = json.dumps(python_data)
+print(json_string)
+```
+Output:
+```json
+{"name": "John", "age": 30, "is_student": false, "courses": ["Math", "Science"]}
+```
+
+2. `json.loads()`: Convert JSON string to Python object
+
+This function is used to deserialize a JSON-formatted string into a Python object (e.g., dictionary, list).
+
+Example:
+```python
+import json
+
+# JSON string
+json_data = '{"name": "John", "age": 30, "is_student": false, "courses": ["Math", "Science"]}'
+
+# Convert JSON string to Python object
+python_object = json.loads(json_data)
+print(python_object)
+print(python_object["name"])  # Accessing the 'name' field
+```
+Output:
+```python
+{'name': 'John', 'age': 30, 'is_student': False, 'courses': ['Math', 'Science']}
+John
+```
+
+3. `json.dump()`: Write Python object as JSON to a file
+
+This function serializes a Python object and writes it to a file in JSON format.
+
+Example:
+```python
+import json
+
+# Python object
+data = {
+    "name": "John",
+    "age": 30,
+    "is_student": False,
+    "courses": ["Math", "Science"]
+}
+
+# Writing JSON to a file
+with open("data.json", "w") as file:
+    json.dump(data, file)
+```
+This will write the following JSON data into the file `data.json`:
+```json
+{
+    "name": "John",
+    "age": 30,
+    "is_student": false,
+    "courses": ["Math", "Science"]
+}
+```
+
+4. `json.load()`: Read JSON from a file and convert it to Python object
+
+This function reads a JSON-formatted file and parses it into a Python object.
+
+Example:
+```python
+import json
+
+# Reading JSON from a file
+with open("data.json", "r") as file:
+    python_object = json.load(file)
+
+print(python_object)
+```
+Output:
+```python
+{'name': 'John', 'age': 30, 'is_student': False, 'courses': ['Math', 'Science']}
+```
+
+Additional Parameters in `json.dumps()`
+
+- `indent`: Adds indentation to the output to make it more readable.
+  
+  Example:
+  ```python
+  json_string = json.dumps(python_data, indent=4)
+  print(json_string)
+  ```
+  Output:
+  ```json
+  {
+      "name": "John",
+      "age": 30,
+      "is_student": false,
+      "courses": [
+          "Math",
+          "Science"
+      ]
+  }
+  ```
+
+- `sort_keys`: Sorts the keys in the JSON output.
+  
+  Example:
+  ```python
+  json_string = json.dumps(python_data, sort_keys=True)
+  print(json_string)
+  ```
+  Output:
+  ```json
+  {"age": 30, "courses": ["Math", "Science"], "is_student": false, "name": "John"}
+  ```
+
+Handling Non-Standard Data Types
+
+By default, the `json` module can only handle basic Python data types like strings, numbers, lists, and dictionaries. However, you can handle other types (like `datetime` or custom classes) by using the `default` parameter with `json.dumps()`.
+
+Example for serializing custom objects:
+```python
+import json
+from datetime import datetime
+
+# Custom object
+class Person:
+    def __init__(self, name, birthdate):
+        self.name = name
+        self.birthdate = birthdate
+
+# Instance of the custom class
+person = Person("John", datetime(1990, 5, 17))
+
+# Custom serialization function for non-standard data types
+def custom_serializer(obj):
+    if isinstance(obj, datetime):
+        return obj.isoformat()  # Convert datetime to ISO format string
+    raise TypeError(f"Type {type(obj)} not serializable")
+
+# Serialize with custom function
+json_string = json.dumps(person.__dict__, default=custom_serializer)
+print(json_string)
+```
+
+Output:
+```json
+{"name": "John", "birthdate": "1990-05-17T00:00:00"}
+```
+
+Summary of Functions
+
+| Function       | Description                                         |
+|----------------|-----------------------------------------------------|
+| `json.dumps()` | Converts a Python object to a JSON string.          |
+| `json.loads()` | Converts a JSON string to a Python object.          |
+| `json.dump()`  | Writes a Python object as JSON to a file.           |
+| `json.load()`  | Reads a JSON file and converts it to a Python object.|
+

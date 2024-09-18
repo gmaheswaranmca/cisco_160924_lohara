@@ -1,0 +1,195 @@
+The `re` module in Python provides functions 
+for working with regular expressions, 
+which allow you to search, match, and manipulate text 
+based on specific patterns. 
+Regular expressions (regex) are powerful tools 
+used for tasks like validating input, searching text, or extracting information.
+
+Key Functions in the `re` Module
+
+1. `re.match()`: Determines if the regular expression matches at the beginning of the string.
+2. `re.search()`: Scans through the string to find the first location where the regular expression pattern produces a match.
+3. `re.findall()`: Returns a list of all matches of a pattern in a string.
+4. `re.finditer()`: Returns an iterator yielding match objects over all matches in a string.
+5. `re.sub()`: Replaces occurrences of a pattern with a replacement string.
+6. `re.split()`: Splits a string by occurrences of a pattern.
+7. `re.compile()`: Compiles a regular expression pattern into a regex object for reuse.
+
+Common Syntax in Regular Expressions
+
+- `.`: Matches any character except newline.
+- `^`: Matches the start of the string.
+- `$`: Matches the end of the string.
+- `*`: Matches 0 or more repetitions of the preceding element.
+- `+`: Matches 1 or more repetitions of the preceding element.
+- `?`: Matches 0 or 1 repetition of the preceding element.
+- `[]`: Matches any single character from the set.
+- `|`: Acts as an OR operator between expressions.
+- `()`: Groups expressions and captures them.
+- `\d`: Matches any digit (equivalent to `[0-9]`).
+- `\w`: Matches any alphanumeric character (equivalent to `[a-zA-Z0-9_]`).
+- `\s`: Matches any whitespace character (spaces, tabs, etc.).
+
+---
+
+1. `re.match()`
+The `re.match()` function checks for a match only at the beginning of the string.
+
+#Example:
+```python
+import re
+
+# Match at the start of the string
+result = re.match(r'\d+', '123abc')
+print(result.group())  # Output: '123'
+
+# No match at the beginning of the string
+result = re.match(r'\d+', 'abc123')
+print(result)  # Output: None
+```
+
+---
+
+2. `re.search()`
+The `re.search()` function scans the entire string for a match and returns the first occurrence.
+
+#Example:
+```python
+import re
+
+# Search for a digit sequence anywhere in the string
+result = re.search(r'\d+', 'abc123xyz')
+print(result.group())  # Output: '123'
+
+# No match found in the string
+result = re.search(r'\d+', 'abcdef')
+print(result)  # Output: None
+```
+
+---
+
+3. `re.findall()`
+The `re.findall()` function returns all matches of a pattern in a string as a list of strings.
+
+#Example:
+```python
+import re
+
+# Find all digit sequences in the string
+matches = re.findall(r'\d+', 'abc123xyz456')
+print(matches)  # Output: ['123', '456']
+
+# Find all words in the string
+matches = re.findall(r'\w+', 'Hello world! 123')
+print(matches)  # Output: ['Hello', 'world', '123']
+```
+
+---
+
+4. `re.finditer()`
+The `re.finditer()` function returns an iterator that yields match objects for all matches in the string.
+
+#Example:
+```python
+import re
+
+# Find all digit sequences and return match objects
+matches = re.finditer(r'\d+', 'abc123xyz456')
+
+for match in matches:
+    print(match.group())  # Output: '123' and '456'
+```
+
+---
+
+5. `re.sub()`
+The `re.sub()` function replaces occurrences of a pattern with a replacement string.
+
+#Example:
+```python
+import re
+
+# Replace all digits with a '#'
+result = re.sub(r'\d+', '#', 'abc123xyz456')
+print(result)  # Output: 'abc#xyz#'
+
+# Replace only the first digit sequence with a '#'
+result = re.sub(r'\d+', '#', 'abc123xyz456', count=1)
+print(result)  # Output: 'abc#xyz456'
+```
+
+---
+
+6. `re.split()`
+The `re.split()` function splits a string by occurrences of a pattern.
+
+#Example:
+```python
+import re
+
+# Split a string by digits
+result = re.split(r'\d+', 'abc123xyz456')
+print(result)  # Output: ['abc', 'xyz', '']
+
+# Split a string by any non-alphanumeric character
+result = re.split(r'\W+', 'Hello, world! 123')
+print(result)  # Output: ['Hello', 'world', '123']
+```
+
+---
+
+7. `re.compile()`
+The `re.compile()` function allows you to compile a regular expression pattern into a reusable regex object. This is useful if you plan to use the same pattern multiple times.
+
+#Example:
+```python
+import re
+
+# Compile the regex pattern
+pattern = re.compile(r'\d+')
+
+# Use the compiled pattern for matching
+result = pattern.match('123abc')
+print(result.group())  # Output: '123'
+
+# Use the compiled pattern for searching
+result = pattern.search('abc123')
+print(result.group())  # Output: '123'
+```
+
+---
+
+Flags in `re` Module
+Flags modify the behavior of the regular expressions. Common flags include:
+
+- `re.IGNORECASE` (`re.I`): Makes the pattern case-insensitive.
+- `re.DOTALL` (`re.S`): Allows `.` to match any character, including newlines.
+- `re.MULTILINE` (`re.M`): Affects the `^` and `$` anchors to match at the beginning or end of any line, not just the entire string.
+
+#Example with Flags:
+```python
+import re
+
+# Case-insensitive search
+result = re.search(r'hello', 'Hello World', re.IGNORECASE)
+print(result.group())  # Output: 'Hello'
+
+# Dot matches newline
+result = re.search(r'.+', 'First line\nSecond line', re.DOTALL)
+print(result.group())  # Output: 'First line\nSecond line'
+```
+
+---
+
+Summary of Key Functions
+
+| Function        | Description                                                             |
+|-----------------|-------------------------------------------------------------------------|
+| `re.match()`    | Matches the pattern at the beginning of the string.                     |
+| `re.search()`   | Searches the string for the first occurrence of the pattern.            |
+| `re.findall()`  | Returns a list of all non-overlapping matches in the string.            |
+| `re.finditer()` | Returns an iterator yielding match objects for all matches in the string.|
+| `re.sub()`      | Replaces occurrences of a pattern with a replacement string.            |
+| `re.split()`    | Splits the string by the occurrences of the pattern.                    |
+| `re.compile()`  | Compiles a regex pattern into a reusable regex object.                  |
+

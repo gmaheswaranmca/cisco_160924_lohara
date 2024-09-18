@@ -1,0 +1,85 @@
+Python provides a wide variety of standard modules 
+to help with various tasks. 
+Some of the most commonly used Python standard modules include:
+
+1. os 
+   - Provides functions for interacting with the operating system, 
+   including file and directory operations.
+   ```python
+   import os
+   os.listdir()  # Lists files in the directory
+   ```
+
+2. sys
+   - Provides access to some variables used or maintained 
+   by the Python interpreter and to functions 
+   that interact strongly with the interpreter.
+   ```python
+   import sys
+   sys.exit()  # Exits the program
+   ```
+
+3. math
+   - Provides access to mathematical functions like sine, cosine, and logarithms.
+   ```python
+   import math
+   math.sqrt(16)  # Returns the square root of 16
+   ```
+
+4. datetime
+   - Supplies classes for manipulating dates and times.
+   ```python
+   from datetime import datetime
+   print(datetime.now())  # Prints the current date and time
+   ```
+
+5. json
+   - Provides functions to work with JSON data, including serialization and deserialization.
+   ```python
+   import json
+   data = {"name": "Alice", "age": 25}
+   json_string = json.dumps(data)  # Converts Python object to JSON string
+   ```
+
+6. re
+   - Provides support for regular expressions.
+   ```python
+   import re
+   pattern = r"\d+"
+   re.findall(pattern, "The year is 2024")  # Finds all numbers
+   ```
+
+7. random
+   - Provides tools for generating random numbers and making random selections.
+   ```python
+   import random
+   random.choice([1, 2, 3, 4])  # Randomly selects an element from the list
+   ```
+
+8. collections
+   - Implements specialized container datatypes 
+   like namedtuple, deque, Counter, and defaultdict.
+   ```python
+   from collections import Counter
+   count = Counter([1, 1, 2, 3, 3, 3])
+   print(count)  # Counter({3: 3, 1: 2, 2: 1})
+   ```
+
+9. itertools
+   - Implements useful functions for working with iterators.
+   ```python
+   import itertools
+   for perm in itertools.permutations([1, 2, 3]):
+       print(perm)  # Prints all permutations of the list
+   ```
+
+10. functools
+   - Provides higher-order functions that act on or return other functions.
+   ```python
+   from functools import lru_cache
+   @lru_cache(maxsize=32)
+   def fib(n):
+       if n < 2:
+           return n
+       return fib(n-1) + fib(n-2)
+   ```

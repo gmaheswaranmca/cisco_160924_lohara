@@ -1,0 +1,155 @@
+The `datetime` module in Python provides classes for manipulating dates and times. 
+It is used to create, manipulate, and format dates, times, and intervals between them.
+
+Here are the key classes and functions available in the `datetime` module:
+
+Key Classes
+
+1. `datetime.date`: Represents a date (year, month, and day).
+2. `datetime.time`: Represents a time (hours, minutes, seconds, and microseconds).
+3. `datetime.datetime`: Combines a date and a time.
+4. `datetime.timedelta`: Represents the difference between two dates or times (duration).
+5. `datetime.tzinfo`: Provides time zone information.
+
+1. `datetime.date` Class
+This class represents a calendar date, independent of time.
+
+#Creating a date object:
+```python
+import datetime
+
+# Creating a date
+d = datetime.date(2024, 9, 17)  # Year, Month, Day
+print(d)  # Output: 2024-09-17
+```
+
+#Getting the current date:
+```python
+today = datetime.date.today()
+print(today)  # Outputs the current date, e.g., 2024-09-17
+```
+
+#Accessing individual components:
+```python
+d = datetime.date(2024, 9, 17)
+print(d.year)  # 2024
+print(d.month)  # 9
+print(d.day)  # 17
+```
+
+#Formatting the date:
+You can use `strftime()` to format a date into a string.
+```python
+formatted_date = d.strftime("%B %d, %Y")  # 'September 17, 2024'
+print(formatted_date)
+```
+
+2. `datetime.time` Class
+This class represents a time (hour, minute, second, microsecond), without any date component.
+
+#Creating a time object:
+```python
+t = datetime.time(14, 30, 45)  # Hour, Minute, Second
+print(t)  # Output: 14:30:45
+```
+
+#Accessing individual components:
+```python
+print(t.hour)   # 14
+print(t.minute) # 30
+print(t.second) # 45
+```
+
+3. `datetime.datetime` Class
+This class combines both date and time information.
+
+#Creating a datetime object:
+```python
+dt = datetime.datetime(2024, 9, 17, 14, 30, 45)  # Year, Month, Day, Hour, Minute, Second
+print(dt)  # Output: 2024-09-17 14:30:45
+```
+
+#Getting the current date and time:
+```python
+now = datetime.datetime.now()
+print(now)  # Outputs current date and time, e.g., 2024-09-17 14:30:45.123456
+```
+
+#Accessing individual components:
+```python
+print(now.year)   # 2024
+print(now.month)  # 9
+print(now.day)    # 17
+print(now.hour)   # Current hour
+print(now.minute) # Current minute
+print(now.second) # Current second
+```
+
+#Formatting datetime:
+Similar to `date`, you can format `datetime` objects using `strftime()`.
+```python
+formatted_datetime = now.strftime("%Y-%m-%d %H:%M:%S")  # '2024-09-17 14:30:45'
+print(formatted_datetime)
+```
+
+4. `datetime.timedelta` Class
+This class represents the difference between two dates or times (a duration).
+
+#Creating a timedelta object:
+```python
+delta = datetime.timedelta(days=5, hours=2, minutes=30)
+print(delta)  # Output: 5 days, 2:30:00
+```
+
+#Adding/subtracting timedelta to/from dates:
+```python
+future_date = datetime.date.today() + datetime.timedelta(days=10)
+print(future_date)  # 10 days in the future
+
+past_date = datetime.date.today() - datetime.timedelta(days=10)
+print(past_date)  # 10 days in the past
+```
+
+#Difference between two dates:
+```python
+d1 = datetime.date(2024, 9, 17)
+d2 = datetime.date(2024, 10, 17)
+delta = d2 - d1
+print(delta.days)  # 30 days difference
+```
+
+5. `datetime.tzinfo` Class
+This class provides an abstract base for dealing with time zone information. The `pytz` library is often used for more practical time zone handling, but basic time zone adjustments can be done using `tzinfo`.
+
+Example: Full Workflow
+Here’s a full example combining `datetime` and `timedelta`:
+```python
+import datetime
+
+# Current date and time
+now = datetime.datetime.now()
+
+# Add 10 days and 5 hours to the current time
+future = now + datetime.timedelta(days=10, hours=5)
+
+# Format the datetime
+formatted_future = future.strftime("%Y-%m-%d %H:%M:%S")
+print("Current time:", now)
+print("Future time:", formatted_future)
+```
+
+Key Functions in `datetime` Module
+
+- `datetime.today()`: Returns the current local date.
+- `datetime.now([tz])`: Returns the current local date and time.
+- `datetime.strptime(date_string, format)`: Parses a string representing a date into a `datetime` object.
+- `datetime.strftime(format)`: Converts a `datetime` object to a string according to the given format.
+
+Example of Parsing Strings into `datetime`:
+
+```python
+date_str = "2024-09-17 14:30:00"
+parsed_date = datetime.datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+print(parsed_date)  # Outputs: 2024-09-17 14:30:00
+```
+
