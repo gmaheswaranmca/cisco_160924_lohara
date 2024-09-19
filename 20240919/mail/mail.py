@@ -3,8 +3,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 # Email details
-sender_email = "your_email@example.com"
-receiver_email = "receiver_email@example.com"
+sender_email = "gmaheswaranmca@gmail.com"
+receiver_email = "gmaheswaranmca@yahoo.com"
 subject = "Test Email from Python"
 body = "This is a test email sent from Python!"
 
@@ -20,7 +20,7 @@ msg.attach(MIMEText(body, 'plain'))
 # SMTP server details
 smtp_server = "smtp.gmail.com"
 port = 587  # For TLS (or use 465 for SSL)
-password = "your_email_password"
+password = ""#"your_email_password"
 
 # Create a secure connection with the SMTP server
 try:
