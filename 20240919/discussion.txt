@@ -21,12 +21,19 @@ Notes App:
 
     notes table 
     C R U D 
-        create 
-        read by id 
-        read all 
-        update by id 
-        delete by id 
-        search 
+============================================================================    
+                verb        noun                            body/json
+create          POST        http://localhost:5000/notes     {"title":"python","notes":"python is the prog lang"}
+read by id      GET         http://localhost:5000/notes/3   
+read all        GET         http://localhost:5000/notes
+update by id    PUT         http://localhost:5000/notes/3   {"title":"python","notes":"python is the modern progr lang"}
+delete by id    DELETE      http://localhost:5000/notes/3
+search          POST        http://localhost:5000/notes_search  {}
+                                                                {"title":"python"}
+                                                                {"notes_text":"lang"}
+                                                                {"title":"python","notes_text":"lang"}
+============================================================================
+http://api.openweathermap.org/data/2.5/weather?q=Bangalore&appid=39be8355f4c2b070862ba7ea33d969fa&units=metric
 
 
 

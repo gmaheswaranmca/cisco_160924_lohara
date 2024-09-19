@@ -47,7 +47,7 @@ def readAllNotes():
     result = response.fetchall() #[rows], each row=[id,title,...]
     con.close()
 
-    notes = []
+    notes = [] # [Note(id=row[0],title=row[1],notes=row[2]) for row in result]
     for row in result:
         notes.append(Note(id=row[0],title=row[1],
                 notes=row[2]))

@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/notes',methods=['POST'])
 def notes_create():
     body = request.get_json()
-    new_note = Note(body['title'], body['notes'])
+    new_note = Note(title=body['title'], notes=body['notes'])
     id = createNote(new_note)
     note = readNoteById(id)
     note_dict = {'id':note.id, 'title':note.title, 'notes':note.notes}
