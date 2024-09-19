@@ -1,0 +1,103 @@
+You're correct that Windows 11 
+does not include a Telnet server by default in its Windows features, 
+unlike earlier versions of Windows. 
+However, you can still set up a Telnet server on Windows 11 
+using third-party software. One commonly used option is Cygwin, 
+which provides a Linux-like environment for Windows and allows you 
+to run a Telnet server. Here's how you can set it up:
+
+Steps to Set Up a Telnet Server on Windows 11 using Cygwin
+1. Download and Install Cygwin:
+   - Go to the [Cygwin website](https://www.cygwin.com/) and 
+   download the setup-x86_64.exe installer for 64-bit Windows.
+   - Run the installer and follow the installation process.
+
+2. Select Telnet Server Packages:
+   During the installation, you'll be prompted to select packages. 
+   To install a Telnet server:
+   
+   - In the Select Packages screen, search for `telnet`.
+   - Under the `Net` category, 
+   select `inetutils` 
+   (this includes the Telnet server and other networking utilities).
+   - Under the `Admin` category, select `xinetd` 
+   (this is required to manage the Telnet server).
+   
+   Complete the installation process.
+
+3. Configure xinetd for Telnet:
+   Once Cygwin is installed, 
+   you need to configure `xinetd` 
+   to manage the Telnet service.
+
+   - Open a Cygwin terminal as an administrator.
+   - Create or edit the Telnet configuration file by running:
+     ```bash
+     nano /etc/xinetd.d/telnet
+     ```
+
+   - Add the following configuration to enable the Telnet service:
+     ```bash
+     service telnet
+     {
+          flags           = REUSE
+          socket_type     = stream
+          wait            = no
+          user            = root
+          server          = /usr/sbin/in.telnetd
+          log_on_failure  += USERID
+          disable         = no
+     }
+     ```
+
+   - Save the file (press `Ctrl + X`, then `Y`, and press `Enter`).
+
+4. Start the xinetd service:
+   To start the Telnet server, run the following command 
+   in the Cygwin terminal:
+   ```bash
+   /usr/sbin/xinetd
+   ```
+
+   This will start the `xinetd` service and 
+   allow Telnet connections.
+
+5. Test the Telnet Server:
+   You can now test your Telnet server 
+   by connecting to it using a Telnet client. 
+   Open a terminal or command prompt and run:
+   ```bash
+   telnet localhost
+   ```
+
+6. Run the Telnet Server Automatically:
+   If you'd like the Telnet server to run automatically 
+   when Windows starts, 
+   you can create a Windows Task Scheduler task 
+   that runs `xinetd` on system startup. Here's how:
+   
+   - Open Task Scheduler and create a new task.
+   - Set the action to start a program and 
+   specify the path to `xinetd` 
+   in the Cygwin installation folder 
+   (usually `C:\cygwin64\usr\sbin\xinetd`).
+   - Set the trigger to run on system startup.
+
+---
+
+Alternative: Use an SSH Server Instead of Telnet
+
+If you're setting up a remote shell and security is a concern, 
+using SSH (Secure Shell) is a much better alternative to Telnet. 
+You can install an SSH server using:
+
+- OpenSSH Server (which is included as a feature in Windows 11). 
+Here's how to enable it:
+    1. Open Settings > Apps > Optional Features.
+    2. Click Add a feature.
+    3. Search for and install OpenSSH Server.
+    4. After installation, open the Services app, 
+    find OpenSSH Server, and start it.
+    5. You can now connect to your machine via SSH 
+    (using an SSH client like `ssh` or `Putty`).
+

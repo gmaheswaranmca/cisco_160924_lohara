@@ -1,0 +1,205 @@
+The `os` module in Python provides a way 
+to interact with the operating system. 
+It allows you to perform operating system-related tasks, 
+such as reading or writing to 
+    the file system, 
+    executing shell commands, and 
+    manipulating environment variables.
+
+Commonly Used Functions in the `os` Module:
+
+1. File and Directory Operations
+2. Environment Variables
+3. Process Management
+4. OS-Specific Functionality
+
+1. File and Directory Operations
+`os.getcwd()`: Get the Current Working Directory
+Returns the path of the current working directory 
+(where the Python script is being executed).
+
+```python
+import os
+
+# Get current working directory
+cwd = os.getcwd()
+print("Current Working Directory:", cwd)
+```
+
+`os.chdir()`: Change Directory
+Changes the current working directory to the given path.
+
+```python
+# Change directory
+os.chdir('/path/to/new/directory')
+print("Changed to:", os.getcwd())
+```
+
+`os.listdir()`: List Files and Directories
+Lists all the files and directories in a specified directory.
+
+```python
+# List files in the current directory
+files = os.listdir('.')
+print(files)
+```
+
+`os.mkdir()`: Create a New Directory
+Creates a new directory at the specified path.
+
+```python
+# Create a new directory
+os.mkdir('new_directory')
+```
+
+`os.makedirs()`: Create Intermediate Directories
+Creates directories recursively, i.e., 
+all intermediate-level directories needed 
+to contain the leaf directory.
+
+```python
+# Create a nested directory
+os.makedirs('parent_directory/child_directory')
+```
+
+`os.remove()`: Remove a File
+Deletes a file.
+
+```python
+# Remove a file
+os.remove('file.txt')
+```
+
+`os.rmdir()`: Remove a Directory
+Deletes a directory. The directory must be empty.
+
+```python
+# Remove a directory
+os.rmdir('directory')
+```
+
+`os.rename()`: Rename a File or Directory
+Renames a file or directory.
+
+```python
+# Rename a file
+os.rename('old_name.txt', 'new_name.txt')
+```
+
+2. Environment Variables
+`os.environ`: Access Environment Variables
+This is a dictionary-like object 
+that contains the environment variables 
+for the current process.
+
+```python
+# Access an environment variable
+path = os.environ.get('PATH')
+print("PATH:", path)
+
+# Set an environment variable
+os.environ['NEW_VAR'] = 'value'
+print("NEW_VAR:", os.environ['NEW_VAR'])
+```
+
+3. Process Management
+`os.system()`: Execute a System Command
+Runs a shell command from within Python.
+
+```python
+# Run a shell command
+os.system('echo Hello from os.system')
+```
+
+`os.popen()`: Open a Pipe to or from a Command
+Runs a command and provides an interface to read the output.
+
+```python
+# Capture the output of a command
+output = os.popen('ls').read()
+print(output)
+```
+
+`os.getpid()`: Get Current Process ID
+Returns the process ID of the current process.
+
+```python
+pid = os.getpid()
+print("Current Process ID:", pid)
+```
+
+`os.getlogin()`: Get Current Logged-in User
+Returns the name of the user logged into the current terminal session.
+
+```python
+user = os.getlogin()
+print("Logged in as:", user)
+```
+
+4. OS-Specific Functionality
+`os.name`: Get OS Name
+Returns the name of the operating system-dependent module imported. 
+Common values are:
+- `'posix'` for Linux/macOS,
+- `'nt'` for Windows.
+
+```python
+# Check the OS name
+os_name = os.name
+print("Operating System:", os_name)
+```
+
+`os.path`: Path Manipulation
+The `os.path` submodule contains functions 
+for manipulating file and directory paths.
+
+- `os.path.join()`: Join two or more path components.
+- `os.path.exists()`: Check if a path exists.
+- `os.path.isdir()`: Check if a path is a directory.
+- `os.path.isfile()`: Check if a path is a file.
+
+```python
+# Join paths
+path = os.path.join('/home/user', 'documents', 'file.txt')
+print("Joined Path:", path)
+
+# Check if a file exists
+if os.path.exists(path):
+    print("The path exists.")
+else:
+    print("The path does not exist.")
+```
+
+`os.stat()`: Get File Status
+This function retrieves information about a file, 
+such as size, modification time, etc.
+
+```python
+# Get file status
+file_stat = os.stat('file.txt')
+print(f"File Size: {file_stat.st_size} bytes")
+print(f"Last Modified: {file_stat.st_mtime}")
+```
+
+5. Platform-Specific Operations
+For more fine-grained control, 
+use the `platform` module 
+to distinguish between different OS types:
+
+```python
+import platform
+
+# Get the OS type
+os_type = platform.system()
+print("OS Type:", os_type)
+```
+
+Conclusion
+- The `os` module is essential for interacting 
+with the file system, managing processes, and 
+accessing environment variables in Python.
+- It provides a simple interface 
+for performing various operating system-related tasks 
+that are highly useful when building scripts that need 
+to interact with the underlying operating system.
+

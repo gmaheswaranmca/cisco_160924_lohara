@@ -35,6 +35,22 @@ search          POST        http://localhost:5000/notes_search  {}
 ============================================================================
 http://api.openweathermap.org/data/2.5/weather?q=Bangalore&appid=39be8355f4c2b070862ba7ea33d969fa&units=metric
 
+============================================================================
 
+@app.route('/notes',methods=['POST'])
+def notes_create():
 
+@app.route('/notes/<id>',methods=['GET'])
+def notes_read_by_id(id):
 
+@app.route('/notes',methods=['GET'])
+def notes_read_all():
+
+@app.route('/notes/<id>',methods=['PUT'])
+def notes_update(id):
+
+@app.route('/notes/<id>',methods=['DELETE'])
+def notes_delete(id):
+
+@app.route('/notes_search',methods=['POST'])
+def notes_search():

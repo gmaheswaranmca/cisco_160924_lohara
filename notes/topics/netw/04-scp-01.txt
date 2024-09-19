@@ -1,0 +1,104 @@
+To perform SCP (Secure Copy Protocol) operations in Python, 
+you can use the `scp` module along with Paramiko 
+for establishing an SSH connection. 
+SCP is used to securely copy files 
+between hosts over an SSH connection.
+
+Steps to use SCP in Python:
+
+1. Install the necessary libraries:
+   - Install both `paramiko` and `scp` using `pip`:
+
+   ```bash
+   pip install paramiko scp
+   ```
+
+2. Use SCP with Paramiko:
+   The `scp` module allows you to use SCP functionality 
+   with an existing Paramiko SSH connection. 
+   Here's an example of how to use SCP 
+   to upload and download files:
+
+Example: SCP Upload and Download
+
+Uploading a file to a remote server:
+
+```python
+import paramiko
+from scp import SCPClient
+
+# Create an SSH client
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+# Connect to the remote server
+ssh.connect(hostname='your_server_ip', username='your_username', password='your_password')
+
+# Create an SCP client
+with SCPClient(ssh.get_transport()) as scp:
+    # Upload a file from local to remote
+    scp.put('local_file_path', 'remote_file_path')
+
+# Close the SSH connection
+ssh.close()
+```
+
+Downloading a file from a remote server:
+
+```python
+import paramiko
+from scp import SCPClient
+
+# Create an SSH client
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+# Connect to the remote server
+ssh.connect(hostname='your_server_ip', username='your_username', password='your_password')
+
+# Create an SCP client
+with SCPClient(ssh.get_transport()) as scp:
+    # Download a file from remote to local
+    scp.get('remote_file_path', 'local_file_path')
+
+# Close the SSH connection
+ssh.close()
+```
+
+Explanation of the Code:
+- Paramiko is used to create an SSH connection to the remote server.
+- SCPClient (from the `scp` module) is used to perform the SCP operation.
+    - `scp.put(local_file_path, remote_file_path)`: 
+        Uploads the file from local to remote.
+    - `scp.get(remote_file_path, local_file_path)`: 
+        Downloads the file from remote to local.
+- You can manage the SCP session inside a `with` block to ensure 
+that the connection is properly closed.
+
+Key Parameters:
+- hostname: 
+    The IP address or domain of the remote server.
+- username: 
+    The username to authenticate with.
+- password: 
+    The password for authentication 
+    (you can also use key-based authentication).
+- local_file_path: 
+    The full path to the file on your local machine.
+- remote_file_path: 
+    The full path to the file on the remote machine.
+
+SCP with Key-based Authentication:
+
+If you're using SSH keys for authentication, 
+you can modify the `connect` method 
+to include the `key_filename` parameter:
+
+```python
+ssh.connect(hostname='your_server_ip', username='your_username', key_filename='/path/to/private/key')
+```
+
+Conclusion:
+- Use Paramiko to establish an SSH connection.
+- Use SCPClient from the `scp` module 
+to transfer files over SCP (upload or download).
