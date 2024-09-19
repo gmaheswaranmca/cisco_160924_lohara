@@ -3,7 +3,7 @@ class MyClass:
     
     @classmethod
     def class_method(cls):
-        return cls.class_var
+        return f'{cls.class_var} {MyClass.class_var}'
     
     @staticmethod
     def static_method():

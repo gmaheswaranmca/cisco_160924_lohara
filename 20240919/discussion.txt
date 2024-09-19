@@ -1,0 +1,33 @@
+core python 
+    - flow controls, function, oop, exception
+    - git / github 
+    - file | json
+
+api provider | api consumer 
+server         client 
+backend        frontend 
+
+to develop web app / web backend app:
+    Flask   package / framework 
+    Django  package / framework 
+
+Flask to develop API end points:
+    backend app 
+    Note {title, notes, id}        
+    sqlite - file based RDBMS | implemented ANSI SQL 
+
+Notes App:
+    Note {title, notes, id}        
+
+    notes table 
+    C R U D 
+        create 
+        read by id 
+        read all 
+        update by id 
+        delete by id 
+        search 
+
+
+
+
