@@ -1,0 +1,231 @@
+Here is a solution using Python 
+with a modular approach 
+that meets the problem requirements.
+
+### 1. `question_master.py`
+
+```python
+import csv
+import logging
+
+# Set up logger
+logging.basicConfig(filename="question_master.log", level=logging.INFO, format="%(asctime)s:%(levelname)s:%(message)s")
+
+
+class QuestionManager:
+    def __init__(self, csv_file="questions.csv"):
+        self.csv_file = csv_file
+        self.questions = self.load_questions()
+
+    def load_questions(self):
+        questions = []
+        try:
+            with open(self.csv_file, mode="r") as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    questions.append(row)
+            logging.info("Questions loaded successfully.")
+        except FileNotFoundError:
+            logging.error("File not found. Initializing with an empty question set.")
+        except Exception as e:
+            logging.error(f"Error loading questions: {e}")
+        return questions
+
+    def save_questions(self):
+        try:
+            with open(self.csv_file, mode="w", newline="") as file:
+                fieldnames = ['num', 'question', 'option1', 'option2', 'option3', 'option4', 'correctoption']
+                writer = csv.DictWriter(file, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(self.questions)
+            logging.info("Questions saved successfully.")
+        except Exception as e:
+            logging.error(f"Error saving questions: {e}")
+
+    def add_question(self, question, option1, option2, option3, option4, correctoption):
+        new_question = {
+            "num": str(len(self.questions) + 1),
+            "question": question,
+            "option1": option1,
+            "option2": option2,
+            "option3": option3,
+            "option4": option4,
+            "correctoption": correctoption
+        }
+        self.questions.append(new_question)
+        logging.info(f"Question added: {new_question}")
+
+    def search_question(self, question_num):
+        for question in self.questions:
+            if question["num"] == str(question_num):
+                return question
+        return None
+
+    def delete_question(self, question_num):
+        question = self.search_question(question_num)
+        if question:
+            self.questions.remove(question)
+            logging.info(f"Question deleted: {question}")
+        else:
+            logging.warning(f"Question number {question_num} not found.")
+
+    def modify_question(self, question_num, updated_data):
+        question = self.search_question(question_num)
+        if question:
+            for key in updated_data:
+                if key in question:
+                    question[key] = updated_data[key]
+            logging.info(f"Question modified: {question}")
+        else:
+            logging.warning(f"Question number {question_num} not found.")
+
+    def display_questions(self):
+        for question in self.questions:
+            print(f"{question['num']}. {question['question']}")
+            print(f"1) {question['option1']}  2) {question['option2']}  3) {question['option3']}  4) {question['option4']}")
+            print(f"Correct Option: {question['correctoption']}\n")
+
+def menu():
+    manager = QuestionManager()
+
+    while True:
+        print("\nMenu:")
+        print("1. Add a question")
+        print("2. Search for a question")
+        print("3. Delete a question")
+        print("4. Modify a question")
+        print("5. Display all questions")
+        print("6. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            question = input("Enter the question: ")
+            option1 = input("Enter option 1: ")
+            option2 = input("Enter option 2: ")
+            option3 = input("Enter option 3: ")
+            option4 = input("Enter option 4: ")
+            correctoption = input("Enter the correct option (e.g., op1, op2, etc.): ")
+            manager.add_question(question, option1, option2, option3, option4, correctoption)
+            manager.save_questions()
+
+        elif choice == "2":
+            question_num = input("Enter the question number: ")
+            question = manager.search_question(question_num)
+            if question:
+                print(question)
+            else:
+                print("Question not found.")
+
+        elif choice == "3":
+            question_num = input("Enter the question number: ")
+            manager.delete_question(question_num)
+            manager.save_questions()
+
+        elif choice == "4":
+            question_num = input("Enter the question number: ")
+            updated_data = {}
+            updated_data['question'] = input("Enter the updated question: ")
+            updated_data['option1'] = input("Enter updated option 1: ")
+            updated_data['option2'] = input("Enter updated option 2: ")
+            updated_data['option3'] = input("Enter updated option 3: ")
+            updated_data['option4'] = input("Enter updated option 4: ")
+            updated_data['correctoption'] = input("Enter the updated correct option: ")
+            manager.modify_question(question_num, updated_data)
+            manager.save_questions()
+
+        elif choice == "5":
+            manager.display_questions()
+
+        elif choice == "6":
+            print("Exiting...")
+            break
+
+        else:
+            print("Invalid choice. Try again.")
+
+if __name__ == "__main__":
+    menu()
+```
+
+### 2. `exam_client.py`
+
+```python
+import time
+import logging
+import csv
+
+# Set up logger
+logging.basicConfig(filename="exam_client.log", level=logging.INFO, format="%(asctime)s:%(levelname)s:%(message)s")
+
+
+class ExamClient:
+    def __init__(self, csv_file="questions.csv"):
+        self.csv_file = csv_file
+        self.questions = self.load_questions()
+        self.score = 0
+
+    def load_questions(self):
+        questions = []
+        try:
+            with open(self.csv_file, mode="r") as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    questions.append(row)
+            logging.info("Questions loaded successfully for the exam.")
+        except FileNotFoundError:
+            logging.error("Question file not found.")
+        except Exception as e:
+            logging.error(f"Error loading questions: {e}")
+        return questions
+
+    def start_exam(self, student_name, university):
+        print(f"\nToday's date and time: {time.strftime('%d/%b/%Y %H:%M:%S')}")
+        print(f"Student Name: {student_name}")
+        print(f"University: {university}\n")
+        logging.info(f"Exam started by {student_name} from {university}")
+
+        for question in self.questions:
+            print(f"{question['num']}. {question['question']}")
+            print(f"1) {question['option1']}")
+            print(f"2) {question['option2']}")
+            print(f"3) {question['option3']}")
+            print(f"4) {question['option4']}")
+            user_answer = input("Enter your choice (e.g., op1, op2, etc.): ").strip()
+
+            if user_answer == question["correctoption"]:
+                self.score += 1
+
+        print(f"\nStudent Name: {student_name}")
+        print(f"University: {university}")
+        print(f"Marks scored: {self.score} correct out of {len(self.questions)} questions.")
+        logging.info(f"Exam finished. {student_name} scored {self.score} out of {len(self.questions)}.")
+
+
+if __name__ == "__main__":
+    student_name = input("Enter student name: ")
+    university = input("Enter university: ")
+
+    client = ExamClient()
+    client.start_exam(student_name, university)
+```
+
+### Key Features
+- Modular Approach: 
+    Both scripts use classes 
+(`QuestionManager` and `ExamClient`) for modularity.
+- Logging: 
+    Logs are generated in `question_master.log` and `exam_client.log` 
+    for debugging and tracking user actions.
+- Exception Handling: 
+    Handles missing file errors and other potential issues.
+- Auto-numbering: 
+    The questions in `question_master.py` are auto-numbered.
+- CSV File Management: 
+    Questions are loaded and saved to a CSV file in both scripts.
+- Exam Simulation: 
+    `exam_client.py` runs an exam session, 
+    asks the student for input, and calculates the final score.
+
+This solution ensures a robust, maintainable, 
+and user-friendly program structure.

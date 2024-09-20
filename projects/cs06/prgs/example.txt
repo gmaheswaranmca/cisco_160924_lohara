@@ -1,0 +1,5 @@
+This is a sample file.
+I love programming.
+Python is a powerful language.
+Welcome to my land.
+This is my land.

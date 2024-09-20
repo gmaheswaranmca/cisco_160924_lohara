@@ -1,0 +1,179 @@
+Here's a Python solution 
+that reads a file, 
+processes the network parameters, and 
+modifies them as specified, 
+while also handling platform detection for Windows or Linux.
+
+Steps:
+1. Read from `ifcfg.conf`: 
+    The script will read the file, 
+    split each line based on `=`, and 
+    store the key-value pairs in a dictionary.
+2. Modify Parameters: 
+    Modify the values of `onboot`, `bootproto`, and `defroute`. 
+    Add the new `IPADDR` and `PREFIX` entries.
+3. Write to new files: 
+    Write the updated dictionary to both a property file 
+    (`net_ifcfg.conf`) and a JSON file (`net_ifcfg.json`).
+4. OS Detection: 
+    Detect the operating system (Windows or Linux) and 
+    execute the respective commands.
+5. Store Results: 
+    Store the command outputs in a dictionary and 
+    append this dictionary to the existing `net_ifcfg.json`.
+
+Code Implementation
+
+```python
+import os
+import platform
+import json
+import subprocess
+
+def netInfo():
+    input_file = 'ifcfg.conf'
+    output_file = 'net_ifcfg.conf'
+    json_file = 'net_ifcfg.json'
+    
+    # Initialize the dictionary to hold network parameters
+    network_config = {}
+
+    # Step 1: Read and split the input configuration file
+    try:
+        with open(input_file, 'r') as file:
+            for line in file:
+                if '=' in line:
+                    key, value = line.strip().split('=')
+                    network_config[key] = value
+    except FileNotFoundError:
+        print(f"{input_file} not found.")
+        return
+
+    # Step 2: Modify the required parameters
+    if 'onboot' in network_config:
+        network_config['onboot'] = 'yes'
+    if 'bootproto' in network_config:
+        network_config['bootproto'] = 'static'
+    if 'defroute' in network_config:
+        network_config['defroute'] = 'no'
+
+    # Step 3: Add new parameters
+    network_config['IPADDR'] = '192.168.1.100'  # Example IP Address
+    network_config['PREFIX'] = '24'  # Example Subnet
+
+    # Step 4: Write the updated dictionary to net_ifcfg.conf
+    try:
+        with open(output_file, 'w') as file:
+            for key, value in network_config.items():
+                file.write(f"{key}={value}\n")
+    except Exception as e:
+        print(f"Error writing to {output_file}: {e}")
+        return
+
+    # Step 5: Write the updated dictionary to net_ifcfg.json
+    try:
+        with open(json_file, 'w') as json_out:
+            json.dump(network_config, json_out, indent=4)
+    except Exception as e:
+        print(f"Error writing to {json_file}: {e}")
+        return
+
+    # Step 6: Detect the current operating system
+    current_os = platform.system().lower()
+    netinfo = {}
+
+    if 'linux' in current_os:
+        netinfo['linux'] = execute_linux_commands()
+    elif 'windows' in current_os:
+        netinfo['winx'] = execute_windows_commands()
+    else:
+        print("Unsupported OS")
+        return
+
+    # Step 7: Add netinfo dictionary to the JSON file
+    try:
+        with open(json_file, 'r+') as json_out:
+            data = json.load(json_out)
+            data['netinfo'] = netinfo
+            json_out.seek(0)
+            json.dump(data, json_out, indent=4)
+    except Exception as e:
+        print(f"Error updating {json_file} with netinfo: {e}")
+
+# Function to execute Linux commands and capture the output
+def execute_linux_commands():
+    commands = ['ip addr', 'netstat', 'nmcli general']
+    results = []
+
+    for cmd in commands:
+        try:
+            output = subprocess.check_output(cmd, shell=True, text=True).strip()
+            results.append({cmd: output})
+        except subprocess.CalledProcessError as e:
+            results.append({cmd: f"Error executing command: {e}"})
+
+    return results
+
+# Function to execute Windows commands and capture the output
+def execute_windows_commands():
+    commands = [
+        'powershell Get-NetRoute',
+        'powershell Get-NetIPAddress'
+    ]
+    results = []
+
+    for cmd in commands:
+        try:
+            output = subprocess.check_output(cmd, shell=True, text=True).strip()
+            results.append({cmd: output})
+        except subprocess.CalledProcessError as e:
+            results.append({cmd: f"Error executing command: {e}"})
+
+    return results
+
+if __name__ == "__main__":
+    netInfo()
+```
+
+Explanation:
+1. Step 1 - Reading the `ifcfg.conf` File: 
+   - Reads each line from `ifcfg.conf`, splits it by `=` to create key-value pairs, and stores them in a dictionary.
+
+2. Step 2 - Modifying the Parameters:
+   - Modifies `onboot` to `'yes'`, `bootproto` to `'static'`, and `defroute` to `'no'`.
+   - Adds two new parameters: `IPADDR` and `PREFIX`.
+
+3. Step 3 - Writing to `net_ifcfg.conf`:
+   - Writes the updated dictionary to `net_ifcfg.conf` with the format `key=value`.
+
+4. Step 4 - Writing to `net_ifcfg.json`:
+   - Converts the dictionary to JSON format and writes it to `net_ifcfg.json`.
+
+5. Step 5 - Detecting the Operating System:
+   - Uses the `platform.system()` function to detect the OS (either Linux or Windows).
+
+6. Step 6 - Executing Commands:
+   - If Linux, it executes `ip addr`, `netstat`, and `nmcli general` commands.
+   - If Windows, it runs `powershell Get-NetRoute` and `powershell Get-NetIPAddress`.
+   - Stores the output of these commands in the `netinfo` dictionary.
+
+7. Step 7 - Adding Command Results to `net_ifcfg.json`:
+   - Reads the existing `net_ifcfg.json`, adds the `netinfo` dictionary to it, and updates the file.
+
+How to Run:
+1. Save this script as `net_info.py`.
+2. Create a sample `ifcfg.conf` file with the following format:
+   ```
+   onboot=no
+   bootproto=dynamic
+   defroute=yes
+   ```
+3. Run the script:
+   ```bash
+   python net_info.py
+   ```
+
+Notes:
+- The script works on both Linux and Windows platforms.
+- It handles errors using exception handling to ensure robustness.
+- The network parameters are updated and saved in both text and JSON formats.

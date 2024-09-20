@@ -1,0 +1,25 @@
+Problem:-
+Build a Unix like Shell using python
+Design the following commands
+1) list - list only the files from current directory
+2) dirs - list only the directories from current directory
+3) date - display system date in the format 15-sep-2024
+4) time - display system time in the format HH:MM:SS
+time -hours - display only system times number of hours
+time -mins - display only system times number of minutes
+time -secs - display only system times number of seconds
+5) cat <filename> - display the contents of text file
+6) head -5 <filename> - display the top 5 lines of text file
+7) tail -5 <filename> - display the last 5 lines of text file
+8) copy_file <src> <dest> - copy source file to destination
+9) remove_file <filename> - delete the file
+10) empty_file <filename> - truancate the file contents - file size set 0
+11) ipconfig - display the system IP ADDRESS
+12) pwd - Present working directory
+13) clear - clear the screen
+14) exit - Shell exits
+Features:-
+1) Command prompt should appear to accept commands
+2) only above 14 commands are valid - throw errors for invalid commands
+3) case sensitive
+4) program should be robust - use exception handling

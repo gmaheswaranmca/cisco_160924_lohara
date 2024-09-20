@@ -1,0 +1,41 @@
+Participants are provided with "question.csv"
+Participants have to prepare two python filenames named
+1) question_master.py
+2) exam_client.py
+Sample format of question.csv:-
+num,question,option1,option2,option3,option4,correctoption
+1,10+20 ans is,op1=20,op2=30,op3=40,op4=10,op2
+2,20-10 ans is,op1=20,op2=30,op3=40,op4=10,op4
+3,2*2 ans is,op1=4,op2=5,op3=6,op4=7,op1
+4,5/2 ans is,op1=2.5,op2=3,op3=6,op4=7,op1
+5,captial of india,op1=delhi,op2=blr,op3=mum,op4=chn,op1
+6,linux is a _____,op1=os,op2=app,op3=game,op4=antivirus,op1
+1) Read the questions from questions.csv and prepare a python nested DATA STRUCTURE
+Display a menu options - "Question_Master.py"
+1) Add a question - let the question num be auto-numbered
+2) Search for a Question based on quest num
+3) Delete question based on question num
+4) Modify the question based on question num
+5) Display all the questions
+6) Exit menu
+2) when we run "ExamClient.py",sample screen
+Display
+Todays date and time 15/Sep/2024 12.46.30
+Enter student name : Vijay
+Enter university : cisco
+Display the question from the Nested DATA STRUCTURE
+1) 10+20 is equal what ?
+op1) 20
+op2) 30
+op3) 40
+op4) 10
+Enter u r choice :
+on the completion of the TEST, Display the following details
+Student name = Venky
+University = Cisco
+Marks-scored = 8 correct out 10 questions
+>> Adopt modularity
+>> where ever class is needed uses classes
+>> use loggers
+>> if needed add some verifications
+>> use try-except - exception handling

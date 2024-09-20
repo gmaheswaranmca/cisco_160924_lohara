@@ -1,0 +1,19 @@
+Instructor Name: Palani Karthikeyan.
+Problem Statement
+Write a user defined python function named netInfo (netInfo()) that will read the property content file named ifcfg.conf. which splits each line into multiple values based on the delimiter (=). convert the splitted data to dictionary and modify the following network parameters like
+onboot parameter from no to yes
+bootproto parameter from dynamic to static
+defroute parameter from yes to no
+also add new entries to the dictionary like IPAddress (IPADDR) and subnet (PREFIX) value.
+write updated dictionary to a new property file called net_ifcfg.conf file.
+The same write updated dictionary to json file (net_ifcfg.json) format.
+In addition, test your working platform is linux or winx.
+Create an empty dictionary called netinfo, keep your working os name as a key (ex: netinfo[‘winx] <or> netinfo[‘linux’]) .
+Based on the the os, execute the following commands and append the command results to a list.
+Add the command -result-list as value to netinfo dictionary. Also add the netinfo dictionary to existing net_ifcfg.json file.
+Linux commands: if add , netstat , nmcli gen
+Windows: powershell Get-Netroute , powershell Get-NetIPAddress
+
+
+ifcfg.conf 
+

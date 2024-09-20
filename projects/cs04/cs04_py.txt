@@ -1,0 +1,242 @@
+Here's a Python solution to build a Unix-like shell with the specified commands. This shell uses the `os`, `datetime`, `shutil`, `socket`, and `subprocess` libraries for file operations, date/time formatting, and IP configuration.
+
+### Code Implementation: `my_shell.py`
+
+```python
+import os
+import sys
+import shutil
+import time
+from datetime import datetime
+import socket
+import subprocess
+
+class UnixShell:
+    def __init__(self):
+        self.commands = {
+            "list": self.list_files,
+            "dirs": self.list_dirs,
+            "date": self.show_date,
+            "time": self.show_time,
+            "cat": self.cat_file,
+            "head": self.head_file,
+            "tail": self.tail_file,
+            "copy_file": self.copy_file,
+            "remove_file": self.remove_file,
+            "empty_file": self.empty_file,
+            "ipconfig": self.show_ip,
+            "pwd": self.show_pwd,
+            "clear": self.clear_screen,
+            "exit": self.exit_shell
+        }
+
+    def run(self):
+        while True:
+            try:
+                cmd = input("Shell> ").strip()
+                if cmd == "":
+                    continue
+                self.execute_command(cmd)
+            except Exception as e:
+                print(f"Error: {str(e)}")
+
+    def execute_command(self, cmd):
+        tokens = cmd.split()
+        command = tokens[0]
+
+        if command in self.commands:
+            self.commands[command](tokens)
+        else:
+            print(f"Invalid command: {command}")
+
+    # Command implementations
+    def list_files(self, tokens):
+        files = [f for f in os.listdir() if os.path.isfile(f)]
+        if files:
+            print("\n".join(files))
+        else:
+            print("No files found in the current directory.")
+
+    def list_dirs(self, tokens):
+        dirs = [d for d in os.listdir() if os.path.isdir(d)]
+        if dirs:
+            print("\n".join(dirs))
+        else:
+            print("No directories found in the current directory.")
+
+    def show_date(self, tokens):
+        current_date = datetime.now().strftime("%d-%b-%Y")
+        print(current_date)
+
+    def show_time(self, tokens):
+        if len(tokens) == 1:
+            current_time = datetime.now().strftime("%H:%M:%S")
+            print(current_time)
+        elif len(tokens) == 2:
+            now = datetime.now()
+            if tokens[1] == "-hours":
+                print(now.strftime("%H"))
+            elif tokens[1] == "-mins":
+                print(now.strftime("%M"))
+            elif tokens[1] == "-secs":
+                print(now.strftime("%S"))
+            else:
+                print(f"Invalid option for 'time': {tokens[1]}")
+        else:
+            print(f"Invalid syntax for 'time'")
+
+    def cat_file(self, tokens):
+        if len(tokens) != 2:
+            print("Usage: cat <filename>")
+            return
+        filename = tokens[1]
+        try:
+            with open(filename, "r") as f:
+                print(f.read())
+        except FileNotFoundError:
+            print(f"File '{filename}' not found.")
+        except Exception as e:
+            print(f"Error reading file '{filename}': {e}")
+
+    def head_file(self, tokens):
+        if len(tokens) != 3 or tokens[1] != "-5":
+            print("Usage: head -5 <filename>")
+            return
+        filename = tokens[2]
+        try:
+            with open(filename, "r") as f:
+                lines = f.readlines()
+                for line in lines[:5]:
+                    print(line, end="")
+        except FileNotFoundError:
+            print(f"File '{filename}' not found.")
+        except Exception as e:
+            print(f"Error reading file '{filename}': {e}")
+
+    def tail_file(self, tokens):
+        if len(tokens) != 3 or tokens[1] != "-5":
+            print("Usage: tail -5 <filename>")
+            return
+        filename = tokens[2]
+        try:
+            with open(filename, "r") as f:
+                lines = f.readlines()
+                for line in lines[-5:]:
+                    print(line, end="")
+        except FileNotFoundError:
+            print(f"File '{filename}' not found.")
+        except Exception as e:
+            print(f"Error reading file '{filename}': {e}")
+
+    def copy_file(self, tokens):
+        if len(tokens) != 3:
+            print("Usage: copy_file <src> <dest>")
+            return
+        src, dest = tokens[1], tokens[2]
+        try:
+            shutil.copyfile(src, dest)
+            print(f"File '{src}' copied to '{dest}'.")
+        except FileNotFoundError:
+            print(f"File '{src}' not found.")
+        except Exception as e:
+            print(f"Error copying file: {e}")
+
+    def remove_file(self, tokens):
+        if len(tokens) != 2:
+            print("Usage: remove_file <filename>")
+            return
+        filename = tokens[1]
+        try:
+            os.remove(filename)
+            print(f"File '{filename}' removed.")
+        except FileNotFoundError:
+            print(f"File '{filename}' not found.")
+        except Exception as e:
+            print(f"Error removing file '{filename}': {e}")
+
+    def empty_file(self, tokens):
+        if len(tokens) != 2:
+            print("Usage: empty_file <filename>")
+            return
+        filename = tokens[1]
+        try:
+            with open(filename, "w"):
+                pass
+            print(f"File '{filename}' truncated to size 0.")
+        except FileNotFoundError:
+            print(f"File '{filename}' not found.")
+        except Exception as e:
+            print(f"Error truncating file '{filename}': {e}")
+
+    def show_ip(self, tokens):
+        try:
+            hostname = socket.gethostname()
+            ip_address = socket.gethostbyname(hostname)
+            print(f"IP Address: {ip_address}")
+        except Exception as e:
+            print(f"Error retrieving IP address: {e}")
+
+    def show_pwd(self, tokens):
+        print(os.getcwd())
+
+    def clear_screen(self, tokens):
+        # For Windows
+        if os.name == "nt":
+            os.system("cls")
+        # For Mac and Linux
+        else:
+            os.system("clear")
+
+    def exit_shell(self, tokens):
+        print("Exiting shell...")
+        sys.exit()
+
+if __name__ == "__main__":
+    shell = UnixShell()
+    shell.run()
+```
+
+### Explanation of Features and Commands:
+1. **Command Prompt:** Accepts commands via the `input()` function.
+2. **Only Valid Commands:** The shell checks against a dictionary of valid commands (`self.commands`). If the command is invalid, an error message is displayed.
+3. **Case Sensitivity:** The command interpreter is case-sensitive, ensuring all commands need to be typed exactly as required.
+4. **Robustness & Exception Handling:** All commands include exception handling to manage common errors, such as file not found, permission issues, or invalid input.
+5. **Commands Overview:**
+   - `list`: Lists files in the current directory.
+   - `dirs`: Lists directories in the current directory.
+   - `date`: Displays the current date in `dd-mon-yyyy` format.
+   - `time`: Displays the time in `HH:MM:SS` format.
+     - Options: `-hours`, `-mins`, `-secs` show hours, minutes, or seconds only.
+   - `cat <filename>`: Displays the content of the specified file.
+   - `head -5 <filename>`: Displays the first 5 lines of the file.
+   - `tail -5 <filename>`: Displays the last 5 lines of the file.
+   - `copy_file <src> <dest>`: Copies a file from `src` to `dest`.
+   - `remove_file <filename>`: Deletes the specified file.
+   - `empty_file <filename>`: Empties the content of the file.
+   - `ipconfig`: Displays the system's IP address.
+   - `pwd`: Displays the present working directory.
+   - `clear`: Clears the terminal screen.
+   - `exit`: Exits the shell.
+
+### Usage:
+1. Run the shell:
+   ```bash
+   python my_shell.py
+   ```
+2. Enter commands at the prompt like:
+   ```bash
+   Shell> list
+   Shell> date
+   Shell> time -hours
+   Shell> cat sample.txt
+   Shell> copy_file sample.txt copy.txt
+   Shell> exit
+   ```
+
+### Error Handling:
+- Each command includes appropriate error handling, 
+such as managing file not found errors, 
+invalid syntax, and unsupported options.
+
+This Python shell effectively simulates a Unix-like shell and 
+provides all the functionality as per the problem statement.

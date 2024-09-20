@@ -1,0 +1,209 @@
+Here’s a breakdown of the solution 
+for the multithreaded client-server application 
+that allows a client to search for a word 
+in a file located on the server. 
+The solution consists of three files: 
+`search.py`, `client.py`, and `server.py`.
+
+1. search.py - Contains the `Search` class
+
+The `Search` class provides methods 
+to clean the data and 
+find lines containing a given word or pattern.
+
+```python
+import re
+
+class Search:
+    def __init__(self, filename='default.txt'):
+        """Initialize with the filename and load the lines into a list."""
+        self.filename = filename
+        try:
+            with open(self.filename, 'r') as file:
+                self.lines = file.readlines()  # Read all lines into a list
+        except FileNotFoundError:
+            raise FileNotFoundError(f"The file {self.filename} was not found.")
+    
+    def clean(self):
+        """Clean special characters from each line using regex."""
+        self.lines = [re.sub(r'[^\w\s]', '', line) for line in self.lines]
+    
+    def getLines(self, word):
+        """Extract lines that contain the specified word or pattern."""
+        result = [word]  # Start with the word being searched
+        for i, line in enumerate(self.lines, 1):
+            if re.search(word, line, re.IGNORECASE):  # Case-insensitive search
+                result.append((i, line.strip()))  # Add (line_number, line_content)
+        return result
+```
+
+2. server.py - Multithreaded server that handles client requests
+
+This is a simple multithreaded server. For each client connection, a new thread is spawned to handle the search request.
+
+```python
+import socket
+import threading
+import json
+from search import Search
+
+# Function to handle each client connection
+def handle_client(client_socket):
+    try:
+        # Receive the filename and word from the client
+        request = client_socket.recv(1024).decode('utf-8')
+        filename, word = request.split(';')  # Split the filename and word sent by the client
+
+        # Search the file for the word
+        searcher = Search(filename)
+        searcher.clean()
+        result = searcher.getLines(word)
+
+        # Send the result back to the client as JSON
+        response = json.dumps(result)
+        client_socket.send(response.encode('utf-8'))
+    except Exception as e:
+        error_message = str(e)
+        client_socket.send(error_message.encode('utf-8'))
+    finally:
+        client_socket.close()
+
+def start_server(host='127.0.0.1', port=65432):
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind((host, port))
+    server.listen(5)
+    print(f"[*] Listening on {host}:{port}")
+
+    while True:
+        client_socket, addr = server.accept()
+        print(f"[*] Accepted connection from {addr}")
+        # Handle the client connection in a new thread
+        client_handler = threading.Thread(target=handle_client, args=(client_socket,))
+        client_handler.start()
+
+if __name__ == "__main__":
+    start_server()
+```
+
+3. client.py - Client that connects to the server
+
+The client sends the filename and the word to the server, then waits for the response and displays it.
+
+```python
+import socket
+import json
+
+def start_client(filename, word, host='127.0.0.1', port=65432):
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    
+    try:
+        client.connect((host, port))
+        # Send the filename and word to the server in the format: filename;word
+        request = f"{filename};{word}"
+        client.send(request.encode('utf-8'))
+
+        # Receive the result from the server
+        response = client.recv(4096).decode('utf-8')
+
+        # Parse the JSON response
+        result = json.loads(response)
+        print("Search Results:", result)
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        client.close()
+
+if __name__ == "__main__":
+    filename = input("Enter the filename: ")
+    word = input("Enter the word to search: ")
+    start_client(filename, word)
+```
+
+---
+
+Explanation
+
+1. search.py:
+   - The `Search` class reads the contents of a file, 
+   cleans them (removes special characters), 
+   and searches for a specific word or pattern. 
+   The method `getLines` returns a list 
+   where the first element is the search term 
+   and the subsequent elements are tuples 
+   containing the line number and the line 
+   that contains the word.
+   
+2. server.py:
+   - The server listens on a given port 
+    for incoming connections.
+   - Upon accepting a connection, 
+    the server reads the filename and 
+    word sent by the client.
+   - The server uses the `Search` class 
+   to find lines containing the word and 
+   sends the result back to the client in JSON format.
+
+3. client.py:
+   - The client prompts the user 
+    for the filename and word to search.
+   - It connects to the server, 
+   sends the request, and 
+   then waits for the result.
+   - Once the response is received, 
+   the client decodes the JSON response and prints it.
+
+---
+
+How to Run
+
+1. Server:
+   - Open a terminal and run the server:
+     ```bash
+     python server.py
+     ```
+
+2. Client:
+   - Open another terminal and run the client:
+     ```bash
+     python client.py
+     ```
+   - Input the filename and the word to search when prompted.
+
+Example
+
+Sample file `example.txt`:
+```
+This is a sample file.
+I love programming.
+Python is a powerful language.
+Welcome to my land.
+This is my land.
+```
+
+Client Input:
+```bash
+Enter the filename: example.txt
+Enter the word to search: land
+```
+
+Client Output:
+```bash
+Search Results: ["land", [4, "Welcome to my land"], [5, "This is my land"]]
+```
+
+---
+
+Key Features
+
+- Multithreaded Server: 
+    The server can handle multiple client requests simultaneously.
+- Error Handling: 
+    If the file does not exist or any other exception occurs, 
+    the server sends an error message to the client.
+- Modularity: 
+    The search functionality is isolated in the `Search` class, 
+    making it easy to modify or extend.
+
+This design ensures 
+that the client-server architecture is robust and flexible 
+for a word search operation in files located on the server.
