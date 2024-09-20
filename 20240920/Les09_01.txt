@@ -1,0 +1,253 @@
+Threads, 
+Processes, & 
+Coroutines:
+
+---
+
+1. Threads
+
+Threads allow you 
+    to run multiple operations concurrently 
+    within a single process. 
+
+This is useful for 
+    tasks that involve I/O operations 
+        or 
+    tasks that can run in parallel.
+
+Using the `threading` Module
+
+- Creating Threads:
+
+  ```python
+import threading
+
+def print_numbers():
+    for i in range(5):
+        print(i)
+
+thread = threading.Thread(target=print_numbers)
+thread.start()  # Start the thread
+thread.join()   # Wait for the thread to finish
+  ```
+
+- Threading with a Subclass:
+
+  ```python
+import threading
+
+class MyThread(threading.Thread):
+    def run(self):
+        for i in range(5):
+            print(i)
+
+thread = MyThread()
+thread.start()
+thread.join()
+  ```
+
+Thread Synchronization
+
+- Locks: 
+    Use locks 
+    to prevent race conditions 
+    when multiple threads access shared resources.
+
+  ```python
+import threading
+
+lock = threading.Lock()
+counter = 0
+
+def increment():
+    global counter
+    with lock:
+        counter += 1
+
+threads = [threading.Thread(target=increment) for _ in range(100)]
+for t in threads:
+    t.start()
+for t in threads:
+    t.join()
+print(counter)
+  ```
+
+- Condition Variables: 
+    Useful for scenarios 
+    where one thread needs 
+    to wait for a condition to be met.
+
+  ```python
+import threading
+
+condition = threading.Condition()
+data_ready = False
+
+def producer():
+    global data_ready
+    with condition:
+        data_ready = True
+        condition.notify()
+
+def consumer():
+    with condition:
+        while not data_ready:
+            condition.wait()
+        print("Data is ready")
+
+threading.Thread(target=producer).start()
+threading.Thread(target=consumer).start()
+```
+
+---
+
+2. Processes
+
+Processes run 
+    in separate memory spaces and 
+    are more suitable 
+        for CPU-bound tasks.
+
+Using the `multiprocessing` Module
+
+- Creating Processes:
+
+  ```python
+import multiprocessing
+
+def print_numbers():
+    for i in range(5):
+        print(i)
+
+process = multiprocessing.Process(target=print_numbers)
+process.start()
+process.join()
+  ```
+
+- Process Synchronization:
+
+  ```python
+import multiprocessing
+
+lock = multiprocessing.Lock()
+counter = multiprocessing.Value('i', 0)
+
+def increment():
+    with lock:
+        counter.value += 1
+
+processes = [multiprocessing.Process(target=increment) for _ in range(100)]
+for p in processes:
+    p.start()
+for p in processes:
+    p.join()
+print(counter.value)
+  ```
+
+- Inter-Process Communication (IPC):
+
+  ```python
+import multiprocessing
+
+def square(x, queue):
+    queue.put(x * x)
+
+queue = multiprocessing.Queue()
+process = multiprocessing.Process(target=square, args=(4, queue))
+process.start()
+process.join()
+result = queue.get()
+print(result)
+  ```
+
+---
+
+3. Coroutines
+
+Coroutines are a type of generator 
+    that can be paused and resumed, 
+    allowing for asynchronous programming.
+
+Using `asyncio`
+
+- Basic Coroutines:
+
+  ```python
+import asyncio
+
+async def print_numbers():
+    for i in range(5):
+        print(i)
+        await asyncio.sleep(1)
+
+asyncio.run(print_numbers())
+  ```
+
+- Running Multiple Coroutines:
+
+  ```python
+async def print_numbers():
+    for i in range(5):
+        print(i)
+        await asyncio.sleep(1)
+
+async def print_letters():
+    for letter in 'abcde':
+        print(letter)
+        await asyncio.sleep(1)
+
+async def main():
+    await asyncio.gather(print_numbers(), print_letters())
+
+asyncio.run(main())
+  ```
+
+- Tasks and Futures:
+
+  ```python
+import asyncio
+
+async def task(name, delay):
+    print(f"Task {name} starting")
+    await asyncio.sleep(delay)
+    print(f"Task {name} completed")
+
+async def main():
+    tasks = [asyncio.create_task(task('A', 2)), asyncio.create_task(task('B', 1))]
+    await asyncio.gather(*tasks)
+
+asyncio.run(main())
+  ```
+
+---
+
+4. Comparison of Threads, Processes, and Coroutines
+
+- Threads:
+  - Pros: Lightweight, suitable for I/O-bound tasks.
+  - Cons: Limited by the Global Interpreter Lock (GIL) in Python, 
+    which affects CPU-bound tasks.
+
+- Processes:
+  - Pros: True parallelism, not affected by GIL, suitable for CPU-bound tasks.
+  - Cons: More overhead due to separate memory spaces, slower to start.
+
+- Coroutines:
+  - Pros: Efficient for I/O-bound tasks, non-blocking operations.
+  - Cons: Requires async/await syntax, less suited for CPU-bound tasks.
+
+---
+
+5. Best Practices
+
+- Choose the Right Concurrency Model: Use threads for I/O-bound tasks, processes for CPU-bound tasks, and coroutines for asynchronous tasks.
+
+- Avoid Blocking Operations: In coroutines, avoid blocking operations by using non-blocking I/O.
+
+- Handle Exceptions: Properly handle exceptions in threads, processes, and coroutines to ensure robust applications.
+
+- Test Concurrent Code: Test code thoroughly to catch concurrency issues such as race conditions and deadlocks.
+
+---
+
+These notes cover the essential concepts and best practices for working with threads, processes, and coroutines in Python, providing a comprehensive guide to concurrency and parallelism.
