@@ -1,0 +1,26 @@
+product {id, name, qty, price}
+
+BS : account{id, name, number, balance}
+AMS : flight{id, number, seats, price} +
+HMS : patient{id, name, age, disease} 
+LMS : book {id, title, price, copies} 
+Cab : cab {id, number, type, price}
+
+Define Product Class. 
+Conduct CRUD operations with sqlite. 
+Special Note:
+	1. Define menu : send mail 
+		find product by id 
+		write product into json file 
+		send product json file to business owner 
+	2. Convert all proucts as dictionary 
+		where id is the key 
+		and find total stock value using dictionary 
+	3. Calculate total stock 
+		assumption minimun 50 prods 
+		appoint a thread to calculate total of 10 prods 
+		do it for all each 10 prods 
+		sum together by manager thread 
+	4. Conduct web scrap for your domain data 	
+		
+		
