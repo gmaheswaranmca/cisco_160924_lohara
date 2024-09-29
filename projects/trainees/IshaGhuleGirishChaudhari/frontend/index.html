@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Management System</title>
+</head>
+<body>
+    <h1>Patient Management System</h1>
+    <a href="/add">Add Patient</a>
+    <ul>
+        {% for patient_id, patient in patients.items() %}
+            <li>
+                {{ patient.name }} - <a href="/view/{{ patient_id }}">View</a> | <a href="/edit/{{ patient_id }}">Edit</a> | <a href="/delete/{{ patient_id }}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,77 @@
+Here’s the documentation for your Flask application and SQLite database integration:
+
+Flask Application
+Overview
+This Flask application provides a simple web interface for managing patient information. It supports CRUD (Create, Read, Update, Delete) operations for patients and uses an in-memory database for demonstration purposes.
+
+Files
+app.py: Main Flask application file.
+db.py: SQLite database integration.
+app.py
+db.py
+Imports
+Flask, render_template, request, redirect, url_for from flask: Flask framework components for creating the web application.
+Global Variables
+app: Flask application instance.
+patients: In-memory dictionary to store patient information.
+Patient Class
+Represents a patient with personal and medical information.
+
+Attributes:
+patient_id: Unique identifier for the patient.
+name: Patient’s name.
+email: Patient’s email address.
+age: Patient’s age.
+medical_history: List of medical history records.
+Methods:
+__init__(self, patient_id, name, email, age, medical_history=None): Initializes the Patient object.
+update_medical_history(self, record): Updates the patient’s medical history.
+Routes
+/: Displays the list of patients.
+/add: Adds a new patient.
+GET: Renders the form to add a new patient.
+POST: Processes the form data and adds the patient to the in-memory database.
+/edit/<patient_id>: Edits an existing patient.
+GET: Renders the form to edit the patient.
+POST: Processes the form data and updates the patient information.
+/delete/<patient_id>: Deletes a patient.
+/view/<patient_id>: Views the details of a patient.
+Running the Application
+To run the application, execute the following command:
+python app.py
+
+db.py
+Imports
+sqlite3: SQLite database module.
+
+Database Class
+Handles SQLite database operations.
+
+Attributes:
+connection: SQLite database connection.
+cursor: SQLite database cursor.
+Methods:
+__init__(self, db_name='data.db'): Initializes the Database object and creates tables if they don’t exist.
+create_tables(self): Creates the patients table.
+insert_patient(self, patient_id, name, email, age, medical_history): Inserts a new patient into the database.
+get_patient(self, patient_id): Retrieves a patient by ID.
+update_medical_history(self, patient_id, medical_history): Updates the medical history of a patient.
+close(self): Closes the database connection.
+
+Usage:
+To use the database class, you can create an instance of the Database class and call its methods to perform database operations. For example:
+
+db = Database()
+
+# Insert a new patient
+db.insert_patient('001', 'Isha Ghule', 'ishaghule@gmail.com', 30, 'Diagnosed with hypertension.')
+
+# Get a patient
+patient = db.get_patient('001')
+print(patient)
+
+# Update medical history
+db.update_medical_history('001', 'Diagnosed with diabetes.')
+
+# Close the database connection
+db.close()

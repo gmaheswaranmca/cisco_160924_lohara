@@ -1,0 +1,24 @@
+[
+    {
+        "flight_number": "1234",
+        "flight_name": "erfe",
+        "capacity": 121,
+        "seats": {
+            "premium": {
+                "window": 6,
+                "middle": 2,
+                "aisle": 3
+            },
+            "business": {
+                "window": 12,
+                "middle": 6,
+                "aisle": 6
+            },
+            "regular": {
+                "window": 42,
+                "middle": 24,
+                "aisle": 18
+            }
+        }
+    }
+]

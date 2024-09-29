@@ -1,0 +1,64 @@
+from flask import Flask, jsonify, request
+from db1 import AirplaneTablesCreate, Airplane, createTicket, readAllPassengers     
+from db1 import search, update, delete, readById         
+AirplaneTablesCreate()                                                 
+app = Flask(__name__)
+
+@app.route('/notes',methods=['POST'])
+def notes_create():
+    body = request.get_json()
+    new_note = Airplane(flight_Number=body['flight_Number'], seats_Available=body['seats_Available'],ticket_Price=body['ticket_price'])
+    id = createTicket(new_note)
+    note = readById(id)
+    note_dict = {'id':note.id, 'flight_Number':note.flight_Number, 'seats_Available':note.seats_Available,'ticket_Price':note.ticket_Price}
+    return jsonify(note_dict)
+
+@app.route('/notes/<id>',methods=['GET'])
+def notes_read_by_id(id):
+    note = readById(id)
+    note_dict = {'id':note.id, 'flight_Number':note.flight_Number, 'seats_Available':note.seats_Available,'ticket_Price':note.ticket_Price}
+    return jsonify(note_dict)
+
+@app.route('/notes',methods=['GET'])
+def notes_read_all():
+    notes = readAllPassengers()
+    notes_dict = []
+    for note in notes:
+        notes_dict.append({'id':note.id, 'flight_Number':note.flight_Number, 'seats_Available':note.seats_Available,'ticket_Price':note.ticket_Price})
+    return jsonify(notes_dict)
+
+@app.route('/notes/<id>',methods=['PUT'])
+def notes_update(id):
+    body = request.get_json()
+    old_note = readById(id)
+    if not old_note:
+        return jsonify({'message': 'Note is not found'}),404
+    old_note.flight_Number = body['flight_Number']
+    old_note.seats_Available = body['seats_Available']
+    old_note.ticket_Price = body['ticket_Price']
+    update(old_note)
+    note = readById(id)
+    note_dict = {'id':note.id, 'flight_Number':note.flight_Number, 'seats_Available':note.seats_Available,'ticket_Price':note.ticket_Price}
+    return jsonify(note_dict)
+
+@app.route('/notes/<id>',methods=['DELETE'])
+def notes_delete(id):
+    old_note = readById(id)
+    if not old_note:
+        return jsonify({'message': 'Note is not found', 'is_error': 1})
+    delete(id)
+    return jsonify({'message': 'Note is successfully deleted', 'is_error': 0})
+
+@app.route('/notes_search',methods=['POST'])
+def notes_search():
+    body = request.get_json()
+    notes = search(body.get('flight_Number',''))
+    notes_dict = []
+    for note in notes:
+        notes_dict.append({'id':note.id, 'flight_Number':note.flight_Number, 'seats_Available':note.seats_Available,'ticket_Price':note.ticket_Price})
+    return jsonify(notes_dict)
+
+
+if __name__ == '__main__':
+    AirplaneTablesCreate()
+    app.run(debug=True)
